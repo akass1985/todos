@@ -1,14 +1,17 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import Todo from './Todo'
 import Nav from 'react-bootstrap/Nav'
 import Table from 'react-bootstrap/Table'
-
+import Button from 'react-bootstrap/Button'
 import FilterLink from '../containers/FilterLink'
-import { VisibilityFilters } from '../actions'
+import { VisibilityFilters, setVisibilityDialog } from '../actions'
 
-const TodoList = ({ todos, toggleTodo }) => (
+const TodoList = ({ todos, toggleTodo, dispatch }) => (
     <div>
+        <h1>Задачи</h1>
+        <Button variant="primary" onClick={() => dispatch(setVisibilityDialog(true))}>Добавить задачу</Button>
         <Nav variant="pills" defaultActiveKey={VisibilityFilters.SHOW_ALL}>
             <FilterLink filter={VisibilityFilters.SHOW_ALL}>
                 Все
@@ -52,4 +55,4 @@ TodoList.propTypes = {
   toggleTodo: PropTypes.func.isRequired
 }
 
-export default TodoList
+export default connect()(TodoList)

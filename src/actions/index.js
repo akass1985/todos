@@ -9,6 +9,11 @@ export const setVisibilityFilter = filter => ({
   filter
 })
 
+export const setVisibilityDialog = visibility => ({
+    type: 'SET_VISIBILITY_DIALOG',
+    visibility
+})
+
 export const toggleTodo = id => ({
   type: 'TOGGLE_TODO',
   id

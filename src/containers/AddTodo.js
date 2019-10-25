@@ -1,7 +1,7 @@
 import React from 'react'
 //import { render } from 'react-dom'
 import { connect } from 'react-redux'
-import { addTodo } from '../actions'
+import { addTodo, setVisibilityDialog } from '../actions'
 import Spinner from 'react-bootstrap/Spinner'
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
@@ -9,7 +9,7 @@ import { Form } from 'react-final-form'
 import { Field } from 'react-final-form-html5-validation'
 import { isAfter, isEqual, format }  from 'date-fns'
 
-const AddTodo = ({ dispatch }) => {
+const AddTodo = ({ dispatch, visibility }) => {
     let values
     
     const onSubmit = async values => {
@@ -28,7 +28,7 @@ const AddTodo = ({ dispatch }) => {
     <Modal 
         size="sm"
         centered
-        show="true">
+        show={visibility}>
         <Modal.Header closeButton>
             <Modal.Title>Добавление задачи</Modal.Title>
         </Modal.Header>
@@ -132,9 +132,15 @@ const AddTodo = ({ dispatch }) => {
                                 <option value="0">Махмуд</option>
                             </Field>
                         </div>
-                        <button type="submit">
+                        <Button 
+                            variant="secondary" 
+                            onClick={() => dispatch(setVisibilityDialog(false))}>
+                            Закрыть
+                        </Button>
+                        <Button 
+                            type="submit" variant="primary">
                             Add Todo
-                        </button>
+                        </Button>
                     </form>
                 )} 
             />
@@ -143,4 +149,8 @@ const AddTodo = ({ dispatch }) => {
   )
 }
 
-export default connect()(AddTodo)
+const mapStateToProps = state => ({
+  visibility: state.visibilityDialog
+})
+    
+export default connect(mapStateToProps)(AddTodo)
