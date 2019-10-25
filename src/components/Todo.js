@@ -2,14 +2,18 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 const Todo = ({ onClick, completed, todo }) => (
-  <li
+  <tr
     onClick={onClick}
     style={{
       textDecoration: completed ? 'line-through' : 'none'
     }}
   >
-    {JSON.stringify(todo)}
-  </li>
+    <td>{todo.title}</td>
+    <td>{todo.priority}</td>
+    <td>{todo.due_date}</td>
+    <td>{todo.assigned_user}</td>
+    <td>{todo.status}</td>
+  </tr>
 )
 
 Todo.propTypes = {
