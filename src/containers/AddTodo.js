@@ -34,7 +34,10 @@ const AddTodo = ({ dispatch, visibility }) => {
         </Modal.Header>
         <Modal.Body>
             <Form 
-                onSubmit={ (values) => dispatch(addTodo(values)) } 
+                onSubmit={ (values) => {
+                    dispatch(addTodo(values));
+                    dispatch(setVisibilityDialog(false))
+                }} 
                 initialValues="" 
                 render={( { handleSubmit, form, submitting, pristine, values }) => (
                     <form onSubmit={handleSubmit}>
