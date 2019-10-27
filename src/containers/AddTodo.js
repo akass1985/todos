@@ -1,7 +1,7 @@
 import React from 'react'
 //import { render } from 'react-dom'
 import { connect } from 'react-redux'
-import { saveTodo, setVisibilityDialog } from '../actions'
+import { saveTodo, editTodo, showSaveDialog } from '../actions'
 import Spinner from 'react-bootstrap/Spinner'
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
@@ -31,8 +31,8 @@ const AddTodo = ({ dispatch, visibility, initialValues = {} }) => {
         <Modal.Body>
             <Form 
                 onSubmit={ (values) => {
-                    dispatch(saveTodo(values));
-                    dispatch(setVisibilityDialog(false))
+		    dispatch(saveTodo(values));
+                    dispatch(showSaveDialog(false));
                 }} 
                 initialValues={initialValues} 
                 render={( { handleSubmit, form, submitting, pristine, values }) => (
@@ -95,9 +95,9 @@ const AddTodo = ({ dispatch, visibility, initialValues = {} }) => {
                             <label>Приоритет</label>
                             <Field name="priority" component="select">
                                 <option />
-                                <option value="#ff0000">низкий</option>
-                                <option value="#00ff00" selected>средний</option>
-                                <option value="#0000ff">высокий</option>
+                                <option value="0">низкий</option>
+                                <option value="1" selected>средний</option>
+                                <option value="2">высокий</option>
                             </Field>
                         </div>
                         <div>
@@ -112,7 +112,7 @@ const AddTodo = ({ dispatch, visibility, initialValues = {} }) => {
                         </div>
                         <div>
                             <label>Создатель</label>
-                            <Field name="creator" component="select">
+                            <Field name="owner" component="select">
                                 <option />
                                 <option value="1">Коля</option>
                                 <option value="2">Петя</option>
@@ -122,7 +122,7 @@ const AddTodo = ({ dispatch, visibility, initialValues = {} }) => {
                         </div>
                         <div>
                             <label>Ответственный</label>
-                            <Field name="Ответственный" component="select">
+                            <Field name="assigned_user" component="select">
                                 <option />
                                 <option value="1">Коля</option>
                                 <option value="2">Петя</option>
@@ -132,12 +132,15 @@ const AddTodo = ({ dispatch, visibility, initialValues = {} }) => {
                         </div>
                         <Button 
                             variant="secondary" 
-                            onClick={() => dispatch(setVisibilityDialog(false))}>
+                            onClick={() => {
+				             dispatch(showSaveDialog(false));
+			                   }
+			    }>
                             Закрыть
                         </Button>
                         <Button 
                             type="submit" variant="primary">
-                            Add Todo
+                            Сохранить
                         </Button>
                     </form>
                 )} 

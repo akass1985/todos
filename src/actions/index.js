@@ -9,7 +9,7 @@ export const setVisibilityFilter = filter => ({
   filter
 })
 
-export const setVisibilityDialog = visibility => ({
+export const showSaveDialog = visibility => ({
     type: 'SET_VISIBILITY_DIALOG',
     visibility
 })
