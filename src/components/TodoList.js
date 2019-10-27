@@ -6,16 +6,21 @@ import Nav from 'react-bootstrap/Nav'
 import Table from 'react-bootstrap/Table'
 import Button from 'react-bootstrap/Button'
 import FilterLink from '../containers/FilterLink'
-import { VisibilityFilters, showSaveDialog } from '../actions'
+import { VisibilityFilters, showSaveDialog, fetchTodos } from '../actions'
 
-const TodoList = ({ todos, editTodo, dispatch }) => (
-    <div>
-        <h1>Задачи</h1>
-        <Button
-	    variant="primary"
-	    onClick={ () => dispatch(showSaveDialog(true)) }>
-	    Добавить задачу
-	</Button>
+const TodoList = ({ todos, editTodo, getTodos, dispatch }) => (
+  <div>
+    <h1>Задачи</h1>
+      <Button
+	      variant="primary"
+	      onClick={ () => dispatch(showSaveDialog(true)) }>
+	      Добавить задачу
+	    </Button>
+      <Button 
+        variant="success"
+        onClick={ () => getTodos() }>
+        Загрузить задачи
+      </Button>
         <Nav variant="pills" defaultActiveKey={VisibilityFilters.SHOW_ALL}>
             <FilterLink filter={VisibilityFilters.SHOW_ALL}>
                 Все

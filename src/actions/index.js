@@ -1,4 +1,3 @@
-let nextTodoId = 0
 export const saveTodo = ( values ) => ({
   type: 'SAVE_TODO',
   item: values
@@ -24,3 +23,8 @@ export const VisibilityFilters = {
   SHOW_COMPLETED: 'SHOW_COMPLETED',
   SHOW_ACTIVE: 'SHOW_ACTIVE'
 }
+
+export const fetchTodos = id => ({
+  type: 'FETCH_TODOS',
+  id
+})

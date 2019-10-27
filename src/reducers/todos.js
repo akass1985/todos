@@ -10,9 +10,15 @@ const todos = (state = [], action) => {
          newState = state.concat([action.item]);
        }
        return newState;
+     case 'FETCH_TODOS':
+       return [
+         ...state,
+         action.id
+       ]
      default:
        return state
   }
 }
 
-export default todos
+export const getTodos = state => state.todos;
+export default todos;
