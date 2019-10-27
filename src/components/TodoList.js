@@ -8,10 +8,14 @@ import Button from 'react-bootstrap/Button'
 import FilterLink from '../containers/FilterLink'
 import { VisibilityFilters, setVisibilityDialog } from '../actions'
 
-const TodoList = ({ todos, toggleTodo, dispatch }) => (
+const TodoList = ({ todos, editTodo, dispatch }) => (
     <div>
         <h1>Задачи</h1>
-        <Button variant="primary" onClick={() => dispatch(setVisibilityDialog(true))}>Добавить задачу</Button>
+        <Button
+	    variant="primary"
+	    onClick={ () => dispatch(setVisibilityDialog(true)) }>
+	    Добавить задачу
+	</Button>
         <Nav variant="pills" defaultActiveKey={VisibilityFilters.SHOW_ALL}>
             <FilterLink filter={VisibilityFilters.SHOW_ALL}>
                 Все
@@ -38,7 +42,7 @@ const TodoList = ({ todos, toggleTodo, dispatch }) => (
                     <Todo
                       key={todo.id}
                       todo={todo}
-                      onClick={() => toggleTodo(todo.id)}
+                      onClick={() => editTodo(todo.id)}
                     />
                 )}
             </tbody>

@@ -1,7 +1,7 @@
 import React from 'react'
 //import { render } from 'react-dom'
 import { connect } from 'react-redux'
-import { addTodo, setVisibilityDialog } from '../actions'
+import { saveTodo, setVisibilityDialog } from '../actions'
 import Spinner from 'react-bootstrap/Spinner'
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
@@ -9,12 +9,8 @@ import { Form } from 'react-final-form'
 import { Field } from 'react-final-form-html5-validation'
 import { isAfter, isEqual, format }  from 'date-fns'
 
-const AddTodo = ({ dispatch, visibility }) => {
+const AddTodo = ({ dispatch, visibility, initialValues = {} }) => {
     let values
-    
-    const onSubmit = async values => {
-        dispatch(addTodo(values))
-    }
   
     const validateDates = (value, values) => {
         var d1 = new Date(value), 
@@ -35,10 +31,10 @@ const AddTodo = ({ dispatch, visibility }) => {
         <Modal.Body>
             <Form 
                 onSubmit={ (values) => {
-                    dispatch(addTodo(values));
+                    dispatch(saveTodo(values));
                     dispatch(setVisibilityDialog(false))
                 }} 
-                initialValues="" 
+                initialValues={initialValues} 
                 render={( { handleSubmit, form, submitting, pristine, values }) => (
                     <form onSubmit={handleSubmit}>
                         <div>
@@ -73,7 +69,6 @@ const AddTodo = ({ dispatch, visibility }) => {
                                 <div>
                                     <label>Дата окончания</label>
                                     <input {...input} type="date" placeholder="Дата окончания" />
-                                    {meta.error && meta.touched && <span>{meta.error}</span>}
                                     {meta.validating && <Spinner />}
                                 </div>
                               )}
@@ -126,7 +121,7 @@ const AddTodo = ({ dispatch, visibility }) => {
                             </Field>
                         </div>
                         <div>
-                            <label></label>
+                            <label>Ответственный</label>
                             <Field name="Ответственный" component="select">
                                 <option />
                                 <option value="1">Коля</option>
@@ -153,7 +148,8 @@ const AddTodo = ({ dispatch, visibility }) => {
 }
 
 const mapStateToProps = state => ({
-  visibility: state.visibilityDialog
+  visibility: state.visibilityDialog,
+  initialValues: state.todos.find( t => t.id === state.currentEditing )
 })
     
 export default connect(mapStateToProps)(AddTodo)

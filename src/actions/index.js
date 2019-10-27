@@ -1,6 +1,6 @@
 let nextTodoId = 0
-export const addTodo = ( values ) => ({
-  type: 'ADD_TODO',
+export const saveTodo = ( values ) => ({
+  type: 'SAVE_TODO',
   item: values
 })
 
@@ -14,8 +14,8 @@ export const setVisibilityDialog = visibility => ({
     visibility
 })
 
-export const toggleTodo = id => ({
-  type: 'TOGGLE_TODO',
+export const editTodo = id => ({
+  type: 'EDIT_TODO',
   id
 })
 
