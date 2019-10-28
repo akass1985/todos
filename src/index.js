@@ -9,16 +9,16 @@ import rootReducer from './reducers'
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-const initialState = {
-  todos: [{id:1, title: 1}],
-  visibilityFilter: 'SHOW_ALL',
-  visibilityDialog: false,
-  currentEditing: null
-};
+// const initialState = {
+//   todos: [{id:1, title: 1}],
+//   visibilityFilter: 'SHOW_ALL',
+//   visibilityDialog: false,
+//   currentEditing: null
+// };
 
 const store = createStore(
   rootReducer,
-  initialState,
+  // initialState,
   composeWithDevTools(
     applyMiddleware(thunk)
   )
