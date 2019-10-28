@@ -8,6 +8,7 @@ import Button from 'react-bootstrap/Button'
 import FilterLink from '../containers/FilterLink'
 import { VisibilityFilters, showSaveDialog, fetchTodo } from '../actions'
 import { selectTodos } from '../reducers'
+import Spinner from 'react-bootstrap/Spinner'
 
 const TodoList = () => {
 
@@ -20,7 +21,7 @@ const TodoList = () => {
   const todos = useSelector(selectTodos);
 
   if (todos.loading) {
-    return <div>loading</div>;
+    return <div><Spinner /></div>;
   }
 
   if (todos.error) {

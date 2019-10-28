@@ -40,11 +40,7 @@ export const fetchTodo = () => (dispatch, getState) => {
   // const userId = selectCurrentUserId(getState());
   const userId = 1;
   if (userId != null) {
-    dispatch({ type: ActionTypes.FETCH_TODO});
-    apiFetchTodos(userId).then(
-      data => dispatch(fetchTodoSuccess(data)),
-      error => dispatch(fetchTodoFailure(error))
-    );
+    apiFetchTodos({type: ActionTypes.FETCH_TODO, userId: 1});
   }
 }
 

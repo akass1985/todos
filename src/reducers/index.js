@@ -25,6 +25,7 @@ const todos = (state = [], action) => {
 }
 
 export const selectTodos = state => state.todos.data || [];
+export const selectCurrentUserId = state => state.selectCurrentUserId || 1;
 
 const visibilityFilter = (state = VisibilityFilters.SHOW_ALL, action) => {
   switch (action.type) {
