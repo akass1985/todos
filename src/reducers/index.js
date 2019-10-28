@@ -24,7 +24,7 @@ const todos = (state = [], action) => {
   }
 }
 
-export const selectTodos = state => state.todos;
+export const selectTodos = state => state.todos.data || [];
 
 const visibilityFilter = (state = VisibilityFilters.SHOW_ALL, action) => {
   switch (action.type) {
@@ -37,9 +37,9 @@ const visibilityFilter = (state = VisibilityFilters.SHOW_ALL, action) => {
 
 const visibilityDialog = (state = false, action) => {
   switch (action.type) {
-      case 'SET_VISIBILITY_DIALOG':
+      case ActionTypes.SET_VISIILITY_DIALOG:
           return action.visibility
-      case 'EDIT_TODO':
+      case ActionTypes.EDIT_TODO:
           return true
       default:
           return state
@@ -48,7 +48,7 @@ const visibilityDialog = (state = false, action) => {
 
 const currentEditing = (state = null, action) => {
   switch (action.type){
-        case 'EDIT_TODO':
+        case ActionTypes.EDIT_TODO:
             return action.id
         default:
           return state

@@ -18,7 +18,6 @@ const TodoList = () => {
   }, []);
 
   const todos = useSelector(selectTodos);
-  const data = todos.data ? todos.data : [];
 
   if (todos.loading) {
     return <div>loading</div>;
@@ -58,7 +57,7 @@ const TodoList = () => {
                 </tr>
               </thead>
               <tbody>
-                  {data.map(todo =>
+                  {todos.map(todo =>
                       <Todo
                         key={todo.id}
                         todo={todo}
