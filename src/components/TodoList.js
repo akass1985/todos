@@ -18,6 +18,7 @@ const TodoList = () => {
   }, []);
 
   const todos = useSelector(selectTodos);
+  const data = todos.data ? todos.data : [];
 
   if (todos.loading) {
     return <div>loading</div>;
@@ -34,11 +35,6 @@ const TodoList = () => {
         variant="primary"
         onClick={ () => dispatch(showSaveDialog(true)) }>
         Добавить задачу
-      </Button>
-      <Button 
-        variant="success"
-        onClick="">
-        Загрузить задачи
       </Button>
       <Nav variant="pills" defaultActiveKey={VisibilityFilters.SHOW_ALL}>
           <FilterLink filter={VisibilityFilters.SHOW_ALL}>
@@ -62,7 +58,7 @@ const TodoList = () => {
                 </tr>
               </thead>
               <tbody>
-                  {todos.map(todo =>
+                  {data.map(todo =>
                       <Todo
                         key={todo.id}
                         todo={todo}

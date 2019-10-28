@@ -18,7 +18,9 @@ const todos = (state = [], action) => {
       case ActionTypes.FETCH_TODO_FAILURE:
         return { ...state, loading: false, error: action.error };
       case ActionTypes.FETCH_TODO_SUCCESS:
-        return { loading: false, error: null, todos: action.data };
+        return { loading: false, error: null, data: action.data };
+      default:
+        return state;
   }
 }
 
