@@ -1,44 +1,33 @@
-const  test_data = [
-    { 
-        id: 1, 
-        title: "Задача 1",
-        description: 'Первая задача',
-        due_date: '2019-10-31',
-        created_date: '2019-10-21',
-        modified_date: '2019-10-15',
-        priority: 2,
-        status: 0,
-        owner: 0,
-        assigned_user: 1
-    }, { 
-        id: 1, 
-        title: "Задача 1",
-        description: 'Первая задача',
-        due_date: '2019-10-31',
-        created_date: '2019-10-21',
-        modified_date: '2019-10-15',
-        priority: 2,
-        status: 0,
-        owner: 0,
-        assigned_user: 1
-    }, { 
-        id: 1, 
-        title: "Задача 1",
-        description: 'Первая задача',
-        due_date: '2019-10-31',
-        created_date: '2019-10-21',
-        modified_date: '2019-10-15',
-        priority: 2,
-        status: 0,
-        owner: 0,
-        assigned_user: 1
-    }, 
-];
+let socket = new WebSocket("ws://localhost:8888/");
+
+socket.onopen = function(e) {
+  alert("[open] Соединение установлено");
+  alert("Отправляем данные на сервер");
+  socket.send("Меня зовут Джон");
+};
+
+
+
+socket.onclose = function(event) {
+  if (event.wasClean) {
+    alert(`[close] Соединение закрыто чисто, код=${event.code} причина=${event.reason}`);
+  } else {
+    // например, сервер убил процесс или сеть недоступна
+    // обычно в этом случае event.code 1006
+    alert('[close] Соединение прервано');
+  }
+};
+
+socket.onerror = function(error) {
+  alert(`[error] ${error.message}`);
+};
 
 const apiFetchTodos  = () => {
     return new Promise((resolve, reject) => {
-        resolve(test_data);
-      })
+        socket.onmessage = function(event) {
+            resolve(JSON.parse(event.data));
+          };
+    })
 }
 
 export default apiFetchTodos;
