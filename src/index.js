@@ -18,20 +18,13 @@ const store = createStore(
   )
 );
 
-// import { ActionTypes } from "../actions";
-
-
-
 socket.onopen = (e) => store.dispatch(fetchTodo());
-// socket.onopen = (e) => (e)
-
-
 
 socket.onmessage = (event) => {
   store.dispatch(fetchTodoSuccess(JSON.parse(event.data)))
 }
 
-socket.onclose = function(event) {
+socket.onclose = (event) => {
   if (event.wasClean) {
     alert(`[close] Соединение закрыто чисто, код=${event.code} причина=${event.reason}`);
   } else {
@@ -41,17 +34,9 @@ socket.onclose = function(event) {
   }
 };
 
-socket.onerror = function(error) {
+socket.onerror = (error) => {
   alert(`[error] ${error.message}`);
 };
-
-// const apiFetchTodos  = () => {
-//     return new Promise((resolve, reject) => {
-//         socket.onmessage = function(event) {
-//             resolve(JSON.parse(event.data));
-//           };
-//     })
-// }
 
 render(
   <Provider store={store}>
