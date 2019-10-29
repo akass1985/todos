@@ -1,21 +1,21 @@
-import { connect } from 'react-redux'
-import { editTodo } from '../actions'
-import TodoList from '../components/TodoList'
-import { VisibilityFilters, fetchTodo } from '../actions'
-// import { getTodos } from '../reducers';
+// import { connect } from 'react-redux'
+// import { editTodo } from '../actions'
+// import TodoList from '../components/TodoList'
+// import { VisibilityFilters, fetchTodo } from '../actions'
+// // import { getTodos } from '../reducers';
 
-const getVisibleTodos = (todos, filter) => {
-  switch (filter) {
-    case VisibilityFilters.SHOW_ALL:
-      return todos
-    case VisibilityFilters.SHOW_COMPLETED:
-      return todos.filter(t => t.completed)
-    case VisibilityFilters.SHOW_ACTIVE:
-      return todos.filter(t => !t.completed)
-    default:
-      throw new Error('Unknown filter: ' + filter)
-  }
-}
+// const getVisibleTodos = (todos, filter) => {
+//   switch (filter) {
+//     case VisibilityFilters.SHOW_ALL:
+//       return todos
+//     case VisibilityFilters.SHOW_COMPLETED:
+//       return todos.filter(t => t.completed)
+//     case VisibilityFilters.SHOW_ACTIVE:
+//       return todos.filter(t => !t.completed)
+//     default:
+//       throw new Error('Unknown filter: ' + filter)
+//   }
+// }
 
 // const mapStateToProps = state => ({
 //   todos: getVisibleTodos(getTodos(), state.visibilityFilter),
@@ -27,4 +27,4 @@ const getVisibleTodos = (todos, filter) => {
 //   getTodos: id => dispatch(fetchTodos(id))
 // })
 
-export default TodoList;
+// export default TodoList;

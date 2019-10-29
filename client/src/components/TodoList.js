@@ -8,8 +8,9 @@ import Button from 'react-bootstrap/Button'
 import Alert from 'react-bootstrap/Alert'
 import FilterLink from '../containers/FilterLink'
 import { VisibilityFilters, setDialogVisibilityAction, fetchTodo, editTodo } from '../actions'
-import { selectTodos, selectDialogVisibility, selectInfoMessage } from '../selectors'
+import { selectTodos, selectDialogVisibility, selectInfoMessage, selectVisibilityFilter } from '../selectors'
 import Spinner from 'react-bootstrap/Spinner'
+import { todos } from '../reducers';
 
 const TodoList = () => {
 
@@ -20,7 +21,7 @@ const TodoList = () => {
   }, []);
 
   const todos = useSelector(selectTodos);
-  const dialogVisibility =  useSelector(selectDialogVisibility);
+  // const dialogVisibility =  useSelector(selectDialogVisibility);
   const infoMessage = useSelector(selectInfoMessage);
 
   if (infoMessage){
@@ -53,13 +54,13 @@ const TodoList = () => {
       </Button>
       <Nav variant="pills" defaultActiveKey={VisibilityFilters.SHOW_ALL}>
           <FilterLink filter={VisibilityFilters.SHOW_ALL}>
-              Все
+              Без группировки
           </FilterLink>
-          <FilterLink filter={VisibilityFilters.SHOW_ACTIVE}>
-              Активные
+          <FilterLink filter={VisibilityFilters.SHOW_BY_DUE_DATE}>
+              По дате завершения
           </FilterLink>
-          <FilterLink filter={VisibilityFilters.SHOW_COMPLETED}>
-              Завершённые
+          <FilterLink filter={VisibilityFilters.SHOW_BY_ASSIGNED_USERS}>
+              По ответственным
           </FilterLink>
       </Nav>
       <Table striped bordered hover size="sm">

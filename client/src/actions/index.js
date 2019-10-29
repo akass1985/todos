@@ -14,8 +14,8 @@ export const ActionTypes = {
 
 export const VisibilityFilters = {
   SHOW_ALL: 'SHOW_ALL',
-  SHOW_COMPLETED: 'SHOW_COMPLETED',
-  SHOW_ACTIVE: 'SHOW_ACTIVE'
+  SHOW_BY_DUE_DATE: 'SHOW_BY_DUE_DATE',
+  SHOW_BY_ASSIGNED_USERS: 'SHOW_BY_ASSIGNED_USERS'
 }
 
 export const saveTodo = item => (dispatch, getState) => (
@@ -31,7 +31,7 @@ export const editTodo = id => ({
 })
 
 export const setVisibilityFilter = filter => ({
-  type: ActionTypes.FETCH_TODO_FAILURE,
+  type: ActionTypes.SET_VISIBILITY_FILTER,
   filter
 })
 

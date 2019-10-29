@@ -1,17 +1,32 @@
-import { connect } from 'react-redux'
+import React from 'react'
+import PropTypes from 'prop-types'
+import Nav from 'react-bootstrap/Nav'
 import { setVisibilityFilter } from '../actions'
-import Link from '../components/Link'
+import { useDispatch } from 'react-redux'
 
-const mapStateToProps = (state, ownProps) => ({
-  active: ownProps.filter === state.visibilityFilter,
-  eventKey: ownProps.filter
-})
+const FilterLink = ({filter, children}) => {
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
-  onClick: () => dispatch(setVisibilityFilter(ownProps.filter))
-})
+  const dispatch = useDispatch();
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Link)
+  return (
+    <Nav.Item>
+        <Nav.Link
+           onClick={ () => dispatch(setVisibilityFilter(filter))}
+           eventKey={filter}
+           style={{
+               marginLeft: '4px',
+           }}
+        >
+          {children}
+        </Nav.Link>
+    </Nav.Item>
+  )
+}
+
+// Link.propTypes = {
+//   active: PropTypes.bool.isRequired,
+//   children: PropTypes.node.isRequired,
+//   onClick: PropTypes.func.isRequired
+// }
+
+export default FilterLink

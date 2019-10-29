@@ -31,7 +31,7 @@ const AddTodo = () => {
 
     return (
         <Modal 
-            size="sm"
+            size="lg"
             centered
             show={dialogVisibility}>
             <Modal.Header>
@@ -46,7 +46,7 @@ const AddTodo = () => {
                     initialValues={dialogInitialValues} 
                     render={( { handleSubmit, form, submitting, pristine, values }) => (
                         <form onSubmit={handleSubmit}>
-                            <div>
+                            {/* <div>
                                 <label>ID</label>
                                 <Field
                                     name="id"
@@ -54,7 +54,7 @@ const AddTodo = () => {
                                     type="text"
                                     placeholder="ID"
                                 />
-                            </div>
+                            </div> */}
                             <div>
                                 <label>Заголовок</label>
                                 <Field
@@ -104,39 +104,35 @@ const AddTodo = () => {
                                 <label>Приоритет</label>
                                 <Field name="priority" component="select">
                                     <option />
-                                    <option value="0">низкий</option>
-                                    <option value="1" selected>средний</option>
-                                    <option value="2">высокий</option>
+                                    <option value="низкий">низкий</option>
+                                    <option value="средний" selected>средний</option>
+                                    <option value="высокий">высокий</option>
                                 </Field>
                             </div>
                             <div>
                                 <label>Статус</label>
                                 <Field name="status" component="select">
                                     <option />
-                                    <option value="1">к выполнению</option>
-                                    <option value="2">выполняется</option>
-                                    <option value="3">выполнена</option>
-                                    <option value="0">отменена</option>
+                                    <option value="к выполнению">к выполнению</option>
+                                    <option value="выполняется">выполняется</option>
+                                    <option value="выполнена">выполнена</option>
+                                    <option value="отменена">отменена</option>
                                 </Field>
                             </div>
                             <div>
                                 <label>Создатель</label>
                                 <Field name="owner" component="select">
                                     <option />
-                                    <option value="1">Коля</option>
-                                    <option value="2">Петя</option>
-                                    <option value="3">Вася</option>
-                                    <option value="0">Махмуд</option>
+                                    <option value="1">Лёха</option>
+                                    <option value="2">Ванька</option>
                                 </Field>
                             </div>
                             <div>
                                 <label>Ответственный</label>
                                 <Field name="assigned_user" component="select">
                                     <option />
-                                    <option value="1">Коля</option>
-                                    <option value="2">Петя</option>
-                                    <option value="3">Вася</option>
-                                    <option value="0">Махмуд</option>
+                                    <option value="1">Лёха</option>
+                                    <option value="2">Ванька</option>
                                 </Field>
                             </div>
                             <Button 

@@ -6,9 +6,8 @@ import { Provider } from 'react-redux'
 import thunk from 'redux-thunk'
 import App from './components/App'
 import rootReducer from './reducers'
-import { fetchTodo, ActionTypes, fetchTodoSuccess, fetchTodoFailure, dbDisconnect } from './actions'
+import { fetchTodo, fetchTodoSuccess, fetchTodoFailure, dbDisconnect } from './actions'
 import 'bootstrap/dist/css/bootstrap.min.css';
-// import apiFetchTodos, { socket } from './middleware'
 import { socket } from './middleware'
 
 const store = createStore(
@@ -28,7 +27,7 @@ socket.onclose = (event) => {
   if (event.wasClean) {
     alert(`[close] Соединение закрыто чисто, код=${event.code} причина=${event.reason}`);
   } else {
-    store.dispatch(dbDisconnect("Аааа! Шеф! Всё потеряно!!!"));
+    store.dispatch(dbDisconnect("Соединение с сервером потеряно"));
   }
 };
 

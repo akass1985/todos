@@ -1,7 +1,7 @@
 import { ActionTypes, VisibilityFilters } from '../actions'
 import { combineReducers } from 'redux';
 
-const todos = (state = [], action) => {
+export const todos = (state = [], action) => {
   switch (action.type) {
       // case ActionTypes.SAVE_TODO:	
       //   const existingTodoIdx = state.findIndex( t => t.id === action.item.id );
@@ -24,7 +24,7 @@ const todos = (state = [], action) => {
   }
 }
 
-const visibilityFilter = (state = VisibilityFilters.SHOW_ALL, action) => {
+export const visibilityFilter = (state = VisibilityFilters.SHOW_ALL, action) => {
   switch (action.type) {
     case ActionTypes.SET_VISIBILITY_FILTER:
       return action.filter
@@ -33,7 +33,7 @@ const visibilityFilter = (state = VisibilityFilters.SHOW_ALL, action) => {
   }
 }
 
-const dialogVisibility = (state = false, action) => {
+export const dialogVisibility = (state = false, action) => {
   switch (action.type) {
       case ActionTypes.SET_DIALOG_VISIBILITY:
           return action.dialogVisibility
@@ -53,7 +53,7 @@ export const currentEditing = (state = null, action) => {
     }
 }
 
-const infoMessage = ( state = null, action) => {
+export const infoMessage = ( state = null, action) => {
     switch (action.type) {
       case ActionTypes.DB_DISCONNECT:
           return action.message
@@ -64,7 +64,7 @@ const infoMessage = ( state = null, action) => {
 
 export default combineReducers({ 
   todos, 
-  VisibilityFilters,
+  visibilityFilter,
   dialogVisibility,
   currentEditing,
   infoMessage
