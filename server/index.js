@@ -27,13 +27,13 @@ const saveTodo = (ws, item) => {
   console.log('ITEM ID: %s', item.id);
   conn.query(
     'SELECT * FROM todos WHERE id=?', 
-    {id: item.id}, 
+    [item.id], 
     (err, rows) => {
       if (err) throw err;
 
       console.log('SELECT RESULT: %s', rows.length);
 
-      if (rows.length == 0){
+      if (rows.length === 0){
         // insert
         console.log('INSERT');
         conn.query(
@@ -45,20 +45,21 @@ const saveTodo = (ws, item) => {
             console.log(res.insertId);
           })
       } else {
-        var sql = "UPDATE todos SET ? WHERE ?";
-        var id = item.id;
-        delete item['id'];
+        // var sql = "UPDATE todos SET ? WHERE ?";
+        // var id = item.id;
+        // delete item['id'];
         console.log('ITEM AFTER DEL ID: %s', JSON.stringify(item));
-        var updates = item;
-        sql = mysql.format(sql, [id, ...updates]);
+        // var updates = item;
+        // sql = conn.format(sql, [item, item.id]);
+        console.log(">>>>>>>>>> %s", sql);
         // update
-        // conn.query(
-        //   'UPDATE todos SET ?', 
-        //   item, 
-        //   (err, res) => {
-        //     if (err) throw err;
-        //     console.log(res);
-        //   })
+        conn.query(
+          'UPDATE todos SET ? WHERE id=?', 
+          [item, item.id], 
+          (err, res) => {
+            if (err) throw err;
+            console.log(res);
+          })
         console.log('UPDATE >>> %s', sql)
       }
     });
