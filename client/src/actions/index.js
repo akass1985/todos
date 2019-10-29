@@ -4,10 +4,11 @@ export const ActionTypes = {
   SAVE_TODO: "SAVE_TODO",
   EDIT_TODO: "EDIT_TODO",
   SET_VISIBILITY_FILTER: "SET_VISIILITY_FILTER",
-  SET_VISIILITY_DIALOG: "SET_VISIBILITY_DIALOG",
+  SET_DIALOG_VISIBILITY: "SET_DIALOG_VISIBILITY",
   FETCH_TODO: "FETCH_TODO",
   FETCH_TODO_SUCCESS: "FETCH_TODO_SUCCESS",
-  FETCH_TODO_FAILURE: "FETCH_TODO_FAILURE"
+  FETCH_TODO_FAILURE: "FETCH_TODO_FAILURE",
+  DB_DISCONNECT: "DB_DISCONNECT"
 }
 
 export const VisibilityFilters = {
@@ -16,7 +17,7 @@ export const VisibilityFilters = {
   SHOW_ACTIVE: 'SHOW_ACTIVE'
 }
 
-export const saveTodo = ( values ) => ({
+export const saveTodo = values => ({
   type: ActionTypes.SAVE_TODO,
   item: values
 })
@@ -31,9 +32,9 @@ export const setVisibilityFilter = filter => ({
   filter
 })
 
-export const showSaveDialog = visibility => ({
-    type: ActionTypes.SET_VISIILITY_DIALOG,
-    visibility
+export const setDialogVisibilityAction = dialogVisibility => ({
+    type: ActionTypes.SET_DIALOG_VISIBILITY,
+    dialogVisibility
 })
 
 export const fetchTodo = () => (dispatch, getState) => {
@@ -52,4 +53,9 @@ export const fetchTodoSuccess = data => ({
 export const fetchTodoFailure = error => ({
   type: ActionTypes.FETCH_TODO_FAILURE,
   error
+})
+
+export const dbDisconnect = message => ({
+  type: ActionTypes.DB_DISCONNECT,
+  message
 })

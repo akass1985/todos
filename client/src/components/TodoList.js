@@ -1,13 +1,14 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 // import PropTypes from 'prop-types'
 import Todo from './Todo'
 import Nav from 'react-bootstrap/Nav'
 import Table from 'react-bootstrap/Table'
 import Button from 'react-bootstrap/Button'
+import Alert from 'react-bootstrap/Alert'
 import FilterLink from '../containers/FilterLink'
-import { VisibilityFilters, showSaveDialog, fetchTodo } from '../actions'
-import { selectTodos } from '../reducers'
+import { VisibilityFilters, setDialogVisibilityAction, fetchTodo, editTodo } from '../actions'
+import { selectTodos, selectDialogVisibility, selectInfoMessage } from '../reducers'
 import Spinner from 'react-bootstrap/Spinner'
 
 const TodoList = () => {
@@ -19,13 +20,27 @@ const TodoList = () => {
   }, []);
 
   const todos = useSelector(selectTodos);
+  const dialogVisibility =  useSelector(selectDialogVisibility);
+  const infoMessage = useSelector(selectInfoMessage);
+
+  if (infoMessage){
+    return (
+      <Alert key="0" variant="warning">
+          {infoMessage}
+      </Alert>    
+    )
+  }
 
   if (todos.loading) {
     return <div><Spinner /></div>;
   }
 
-  if (todos.error) {
-    return <div>error: {todos.error.toString()}</div>;
+  if (todos.error){
+    return (
+      <Alert key="0" variant="warning">
+          {todos.error.toString()}
+      </Alert>    
+    )
   }
 
   return (
@@ -33,7 +48,7 @@ const TodoList = () => {
       <h1>Задачи</h1>
       <Button
         variant="primary"
-        onClick={ () => dispatch(showSaveDialog(true)) }>
+        onClick={ () => dispatch(setDialogVisibilityAction(true)) }>
         Добавить задачу
       </Button>
       <Nav variant="pills" defaultActiveKey={VisibilityFilters.SHOW_ALL}>
@@ -62,7 +77,7 @@ const TodoList = () => {
                       <Todo
                         key={todo.id}
                         todo={todo}
-                        // onClick={() => editTodo(todo.id)}
+                        onClick={ () => dispatch(editTodo(todo.id)) }
                       />
                   )}
               </tbody>
