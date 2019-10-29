@@ -45,4 +45,4 @@ export const selectCurrentEditing = state => state.currentEditing || null
 
 export const selectInfoMessage = state => state.infoMessage
 
-export const selectVisibilityFilter = state => state.visivilityFilter || VisibilityFilters.SHOW_ALL
+export const selectVisibilityFilter = state => state.visibilityFilter || VisibilityFilters.SHOW_ALL
