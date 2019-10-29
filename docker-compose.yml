@@ -14,22 +14,22 @@ services:
         ports:
             - 3306:3306
     
-    back:
-        build:
-            context: ./server
-        depends_on:
-            - db
-        ports:
-            - 8888:8080
+    # back:
+    #     build:
+    #         context: ./server
+    #     depends_on:
+    #         - db
+    #     ports:
+    #         - 8888:8080
     
-    front:
-        build:
-            context: ./client
-        depends_on:
-            - db
-            - back
-        ports:
-            - 3000:3000
+    # front:
+    #     build:
+    #         context: ./client
+    #     depends_on:
+    #         - db
+    #         - back
+    #     ports:
+    #         - 3000:3000
 
     adminer:
         image: adminer

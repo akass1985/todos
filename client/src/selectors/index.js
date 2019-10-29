@@ -2,7 +2,7 @@ import  { format }  from 'date-fns'
 
 export const selectTodos = state => state.todos.data || [];
 
-export const selectCurrentUserId = state => state.currenetUserId || 1;
+export const selectCurrentUserId = state => state.currentUserId || 1;
 
 export const selectDialogVisibility = state => state.dialogVisibility
 

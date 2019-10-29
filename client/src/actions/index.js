@@ -42,7 +42,6 @@ export const setDialogVisibilityAction = dialogVisibility => ({
 
 export const fetchTodo = () => (dispatch, getState) => {
   const userId = selectCurrentUserId(getState());
-  // const userId = 1;
   if (userId != null) {
     apiFetchTodos({
       type: ActionTypes.FETCH_TODO, 
