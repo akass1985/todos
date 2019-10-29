@@ -1,9 +1,21 @@
 export const socket = new WebSocket("ws://localhost:8888/");
 
-const apiFetchTodos = (message) => {
+export const apiFetchTodos = (message) => {
     if (socket.readyState === WebSocket.OPEN) {
-        socket.send(JSON.stringify({type: message.type,userId: message.userId}));
+        socket.send(JSON.stringify({
+          type: message.type, 
+          userId: message.userId
+        }));
     }
   }
+
+export const apiSaveTodo = (message) => {
+  if (socket.readyState === WebSocket.OPEN) {
+    socket.send(JSON.stringify({
+      type: message.type, 
+      item: message.item
+    }))
+  }
+}
 
 export default apiFetchTodos;

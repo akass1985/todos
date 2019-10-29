@@ -9,7 +9,7 @@ import Button from 'react-bootstrap/Button'
 import { Form } from 'react-final-form'
 import { Field } from 'react-final-form-html5-validation'
 import { isAfter, isEqual }  from 'date-fns'
-import { selectDialogVisibility, selectDialogInitialValues, selectCurrentEditing } from '../reducers'
+import { selectDialogVisibility, selectDialogInitialValues, selectCurrentEditing } from '../selectors'
 
 const AddTodo = () => {
 
@@ -17,6 +17,7 @@ const AddTodo = () => {
 
     const dialogVisibility = useSelector(selectDialogVisibility);
     const dialogInitialValues = useSelector(selectDialogInitialValues);
+    const currentEditing = useSelector(selectCurrentEditing);
 
     let values
   
@@ -34,7 +35,7 @@ const AddTodo = () => {
             centered
             show={dialogVisibility}>
             <Modal.Header>
-                <Modal.Title>Добавление задачи</Modal.Title>
+                <Modal.Title>{currentEditing ? 'Редактирование' : 'Добавление' } задачи</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <Form 

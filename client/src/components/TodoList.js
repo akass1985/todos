@@ -8,7 +8,7 @@ import Button from 'react-bootstrap/Button'
 import Alert from 'react-bootstrap/Alert'
 import FilterLink from '../containers/FilterLink'
 import { VisibilityFilters, setDialogVisibilityAction, fetchTodo, editTodo } from '../actions'
-import { selectTodos, selectDialogVisibility, selectInfoMessage } from '../reducers'
+import { selectTodos, selectDialogVisibility, selectInfoMessage } from '../selectors'
 import Spinner from 'react-bootstrap/Spinner'
 
 const TodoList = () => {

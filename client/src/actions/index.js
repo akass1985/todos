@@ -1,4 +1,5 @@
-import apiFetchTodos from '../middleware'
+import apiFetchTodos, { apiSaveTodo } from '../middleware'
+import { selectCurrentUserId } from '../selectors'
 
 export const ActionTypes = {
   SAVE_TODO: "SAVE_TODO",
@@ -17,10 +18,12 @@ export const VisibilityFilters = {
   SHOW_ACTIVE: 'SHOW_ACTIVE'
 }
 
-export const saveTodo = values => ({
-  type: ActionTypes.SAVE_TODO,
-  item: values
-})
+export const saveTodo = item => (dispatch, getState) => (
+  apiSaveTodo({
+    type: ActionTypes.SAVE_TODO,
+    item: item
+  })
+)
 
 export const editTodo = id => ({
   type: ActionTypes.EDIT_TODO,
@@ -38,10 +41,12 @@ export const setDialogVisibilityAction = dialogVisibility => ({
 })
 
 export const fetchTodo = () => (dispatch, getState) => {
-  // const userId = selectCurrentUserId(getState());
-  const userId = 1;
+  const userId = selectCurrentUserId(getState());
+  // const userId = 1;
   if (userId != null) {
-    apiFetchTodos({type: ActionTypes.FETCH_TODO, userId: 1});
+    apiFetchTodos({
+      type: ActionTypes.FETCH_TODO, 
+      userId: userId});
   }
 }
 
