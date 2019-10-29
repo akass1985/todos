@@ -1,0 +1,12 @@
+{
+  "name": "todos-back",
+  "version": "1.0.0",
+  "main": "src/index.js",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mysql": "^2.17.1",
+    "websocket": "^1.0.30",
+    "ws": "^7.2.0"
+  }
+}

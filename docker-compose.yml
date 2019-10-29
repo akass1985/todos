@@ -1,0 +1,40 @@
+version: '3.3'
+
+services:
+    db:
+        image: mysql:5.6
+        restart: always
+        command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8 --collation-server=utf8_general_ci
+        volumes:
+            - ./docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: example
+            LANG: C.UTF-8
+        ports:
+            - 3306:3306
+    
+    back:
+        build:
+            context: ./server
+        depends_on:
+            - db
+        ports:
+            - 8888:8080
+    
+    front:
+        build:
+            context: ./client
+        depends_on:
+            - db
+            - back
+        ports:
+            - 3000:3000
+
+    adminer:
+        image: adminer
+        restart: always
+        depends_on:
+            - db
+        ports:
+            - 8088:8080
