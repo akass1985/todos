@@ -139,19 +139,21 @@ const AddTodo = () => {
                                     </option>)}
                                 </Field>
                             </div>
-                            <Button 
-                                variant="secondary" 
-                                onClick={ () => dispatch(setDialogVisibilityAction(false))}>
-                                Закрыть
-                            </Button>
-                            <Button 
-                                type="submit" variant="primary">
-                                Сохранить
-                            </Button>
                         </form>
                     )} 
                 />
             </Modal.Body>
+            <Modal.Footer>
+                <Button 
+                    variant="secondary" 
+                    onClick={ () => dispatch(setDialogVisibilityAction(false))}>
+                    Закрыть
+                </Button>
+                <Button 
+                    type="submit" variant="primary">
+                    Сохранить
+                </Button>
+                </Modal.Footer>
         </Modal>
     )
 }
