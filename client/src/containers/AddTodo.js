@@ -9,7 +9,12 @@ import Button from 'react-bootstrap/Button'
 import { Form } from 'react-final-form'
 import { Field } from 'react-final-form-html5-validation'
 import { isAfter, isEqual }  from 'date-fns'
-import { selectDialogVisibility, selectDialogInitialValues, selectCurrentEditing } from '../selectors'
+import { 
+    selectDialogVisibility, 
+    selectDialogInitialValues, 
+    selectCurrentEditing, 
+    selectUsers 
+} from '../selectors'
 import { fetchUsers } from '../actions'
 
 const AddTodo = () => {
@@ -23,6 +28,7 @@ const AddTodo = () => {
     const dialogVisibility = useSelector(selectDialogVisibility);
     const dialogInitialValues = useSelector(selectDialogInitialValues);
     const currentEditing = useSelector(selectCurrentEditing);
+    const users = useSelector(selectUsers);
 
     let values
   
@@ -51,15 +57,6 @@ const AddTodo = () => {
                     initialValues={dialogInitialValues} 
                     render={( { handleSubmit, form, submitting, pristine, values }) => (
                         <form onSubmit={handleSubmit}>
-                            {/* <div>
-                                <label>ID</label>
-                                <Field
-                                    name="id"
-                                    component="input"
-                                    type="text"
-                                    placeholder="ID"
-                                />
-                            </div> */}
                             <div>
                                 <label>Заголовок</label>
                                 <Field
@@ -128,16 +125,18 @@ const AddTodo = () => {
                                 <label>Создатель</label>
                                 <Field name="owner" component="select">
                                     <option />
-                                    <option value="1">Лёха</option>
-                                    <option value="2">Ванька</option>
+                                    {users.map( user => <option value={user.id}>
+                                        {user.firstname} {user.middlename} {user.lastname}
+                                    </option>)}
                                 </Field>
                             </div>
                             <div>
                                 <label>Ответственный</label>
                                 <Field name="assigned_user" component="select">
                                     <option />
-                                    <option value="1">Лёха</option>
-                                    <option value="2">Ванька</option>
+                                    {users.map( user => <option value={user.id}>
+                                        {user.firstname} {user.middlename} {user.lastname}
+                                    </option>)}
                                 </Field>
                             </div>
                             <Button 
