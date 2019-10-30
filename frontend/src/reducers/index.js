@@ -76,7 +76,7 @@ export const auth = (state = [], action) => {
 
 export default combineReducers({ 
   todos, 
-  // users, 
+  users, 
   auth,
   visibilityFilter,
   dialogVisibility,

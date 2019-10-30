@@ -1,6 +1,5 @@
 import apiFetchTodos, { apiSaveTodo, apiFetchUsers } from '../middleware'
 import { selectCurrentUserId } from '../selectors'
-import { auth } from '../reducers'
 
 export const ActionTypes = {
   SAVE_TODO: "SAVE_TODO",

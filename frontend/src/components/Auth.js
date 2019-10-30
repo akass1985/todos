@@ -13,8 +13,6 @@ const Auth = () => {
 
     const dispatch = useDispatch();
 
-    let values;
-
     return (
         <Modal 
             size="sm"
@@ -27,8 +25,8 @@ const Auth = () => {
             <Modal.Body>
                 <Container>
                     <Form 
-                        onSubmit={ () => dispatch(getAuth(values)) } 
-                        initialValues={{}} 
+                        onSubmit={ (values) => dispatch(getAuth(values)) } 
+                        initialValues={{ login: "alexeykass", password: "alexeykass" }} 
                         render={( { handleSubmit, form, submitting, pristine, values }) => (
                             <form onSubmit={handleSubmit}>
                                 <div>
