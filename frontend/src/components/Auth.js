@@ -78,11 +78,6 @@ const Auth = () => {
             </Button>
                                     </Row>
                                 </div>
-                                <div>
-                                    <pre>
-                                        {JSON.stringify(values)}
-                                    </pre>
-                                </div>
                             </form>
                         )} 
                     />

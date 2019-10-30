@@ -5,7 +5,7 @@ import { selectUsers } from '../selectors'
 import { formatRelative, isAfter } from 'date-fns'
 import { ru } from 'date-fns/locale'
 
-const Todo = ({ onClick, completed, todo }) => {
+const Todo = ({ onClick, todo }) => {
 
   const users = useSelector(selectUsers);
 

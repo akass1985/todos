@@ -18,9 +18,9 @@ const TodoList = () => {
 
   const dispatch = useDispatch();
 
-  useEffect( () => {
-    dispatch(fetchTodo());
-  }, []);
+  // useEffect( () => {
+  //   dispatch(fetchTodo());
+  // }, []);
 
   const todos = useSelector(selectTodos);
   // const dialogVisibility =  useSelector(selectDialogVisibility);

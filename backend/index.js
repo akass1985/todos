@@ -23,7 +23,7 @@ const sendTodos = (ws, userId) => {
 
 const sendUsers = (ws, filter) => {
   console.log('RECEIVED FETCH_USERS MESSAGE, filter=%s', filter);
-  conn.query('SELECT  FROM users', (err, rows) => {
+  conn.query('SELECT id, firstname, middlename, lastname, chief FROM users', (err, rows) => {
     if (err) throw err;
     const answer = JSON.stringify({
       type: "FETCH_USERS",
@@ -128,7 +128,6 @@ console.log('BACK IS STARTED!');
 wss.on('connection', (ws) => {
   ws.on('message', (message) => {
     var obj = JSON.parse(message);
-    // console.log("DHFL %s", message);
     if (obj.type){
       switch (obj.type){
         case "FETCH_TODO": sendTodos(ws, obj.userId); break;

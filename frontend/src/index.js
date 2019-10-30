@@ -38,15 +38,15 @@ socket.onmessage = (message) => {
         store.dispatch(fetchTodoSuccess(obj.data));
       case "FETCH_USERS": 
         store.dispatch(fetchUsersSuccess(obj.data));
-      case "LOGIN":
-        if (obj.result === "OK"){
-          // store.dispatch(loginSuccessful(obj.userId));
-          // store.dispatch(fetchTodo());
-          break;
-        } else {
-          // store.dispatch(loginFailure(obj.error));
-          break;
-        }
+      // case "LOGIN":
+      //   if (obj.result === "OK"){
+      //     // store.dispatch(loginSuccessful(obj.userId));
+      //     // store.dispatch(fetchTodo());
+      //     break;
+      //   } else {
+      //     // store.dispatch(loginFailure(obj.error));
+      //     break;
+      //   }
     }
   }
 }
