@@ -1,4 +1,4 @@
-import apiFetchTodos, { apiSaveTodo, apiFetchUsers } from '../middleware'
+import apiFetchTodos, { apiSaveTodo, apiFetchUsers } from '../api'
 import { selectCurrentUserId } from '../selectors'
 
 export const ActionTypes = {

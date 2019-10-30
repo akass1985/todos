@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import Nav from 'react-bootstrap/Nav'
 import { setVisibilityFilter } from '../actions'
 import { useDispatch } from 'react-redux'
-import NavDropdown from 'react-bootstrap/NavDropdown'
 
 const FilterLink = ({filter, children}) => {
 

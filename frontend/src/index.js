@@ -7,15 +7,13 @@ import thunk from 'redux-thunk'
 import App from './components/App'
 import rootReducer from './reducers'
 import { 
-  fetchTodo, 
   fetchTodoSuccess, 
   fetchTodoFailure, 
   fetchUsers, 
   fetchUsersSuccess,  
-  fetchUsersFailure, 
   dbDisconnect } from './actions'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { socket } from './middleware'
+import { socket } from './api'
 
 const store = createStore(
   rootReducer,
