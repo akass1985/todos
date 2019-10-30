@@ -18,4 +18,13 @@ export const apiSaveTodo = (message) => {
   }
 }
 
+export const apiFetchUsers = (message) => {
+  if (socket.readyState === WebSocket.OPEN) {
+      socket.send(JSON.stringify({
+        type: message.type, 
+        filter: message.filter
+      }));
+  }
+}
+
 export default apiFetchTodos;

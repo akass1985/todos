@@ -6,7 +6,14 @@ import { Provider } from 'react-redux'
 import thunk from 'redux-thunk'
 import App from './components/App'
 import rootReducer from './reducers'
-import { fetchTodo, fetchTodoSuccess, fetchTodoFailure, dbDisconnect } from './actions'
+import { 
+  fetchTodo, 
+  fetchTodoSuccess, 
+  fetchTodoFailure, 
+  fetchUsers, 
+  fetchUsersSuccess,  
+  fetchUsersFailure, 
+  dbDisconnect } from './actions'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { socket } from './middleware'
 
@@ -17,10 +24,21 @@ const store = createStore(
   )
 );
 
-socket.onopen = (e) => store.dispatch(fetchTodo());
+socket.onopen = (e) => {
+  store.dispatch(fetchTodo());
+  store.dispatch(fetchUsers());
+}
 
-socket.onmessage = (event) => {
-  store.dispatch(fetchTodoSuccess(JSON.parse(event.data)))
+socket.onmessage = (message) => {
+  const obj = JSON.parse(message.data);
+  if (obj.type){
+    switch (obj.type){
+      case "FETCH_TODOS": 
+        store.dispatch(fetchTodoSuccess(obj.data));
+      case "FETCH_USERS": 
+        store.dispatch(fetchUsersSuccess(obj.data));
+    }
+  }
 }
 
 socket.onclose = (event) => {

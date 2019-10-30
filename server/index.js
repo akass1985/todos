@@ -12,15 +12,28 @@ const sendTodos = (ws, userId) => {
   console.log('RECEIVED FETCH_TODOS MESSAGE, userId=%s', userId);
   conn.query('SELECT * FROM todos WHERE owner=? OR assigned_user=?', [userId, userId], (err, rows) => {
     if (err) throw err;
-    const answer = JSON.stringify(rows);
+    const answer = JSON.stringify({
+      type: "FETCH_TODOS",
+      data: rows
+    });
     ws.send(answer);
     console.log('SENT: %s', answer);
   });
 }
 
-// var sql = "SELECT * FROM ?? WHERE ?? = ?";
-// var inserts = ['users', 'id', userId];
-// sql = mysql.format(sql, inserts);
+const sendUsers = (ws, filter) => {
+  console.log('RECEIVED FETCH_USERS MESSAGE, filter=%s', filter);
+  conn.query('SELECT * FROM users', (err, rows) => {
+    if (err) throw err;
+    const answer = JSON.stringify({
+      type: "FETCH_USERS",
+      data: rows
+    });
+    ws.send(answer);
+
+    console.log('SENT: %s', answer);
+  });
+}
 
 const saveTodo = (ws, item) => {
   console.log('RECEIVED SAVE_TODO MESSAGE: %s', JSON.stringify(item));
@@ -76,6 +89,7 @@ wss.on('connection', (ws) => {
       switch (obj.type){
         case "FETCH_TODO": sendTodos(ws, obj.userId); break;
         case "SAVE_TODO": saveTodo(ws, obj.item); break;
+        case "FETCH_USERS": sendUsers(ws, obj.filter); break;
         default:
           console.log("DEFAULT: TYPE(%s), MESSAGE (%s)", obj.type, message)
       }

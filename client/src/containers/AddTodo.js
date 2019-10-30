@@ -10,10 +10,15 @@ import { Form } from 'react-final-form'
 import { Field } from 'react-final-form-html5-validation'
 import { isAfter, isEqual }  from 'date-fns'
 import { selectDialogVisibility, selectDialogInitialValues, selectCurrentEditing } from '../selectors'
+import { fetchUsers } from '../actions'
 
 const AddTodo = () => {
 
     const dispatch = useDispatch();
+
+    useEffect( () => {
+        dispatch(fetchUsers());
+      }, []);
 
     const dialogVisibility = useSelector(selectDialogVisibility);
     const dialogInitialValues = useSelector(selectDialogInitialValues);

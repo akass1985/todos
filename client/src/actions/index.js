@@ -1,4 +1,4 @@
-import apiFetchTodos, { apiSaveTodo } from '../middleware'
+import apiFetchTodos, { apiSaveTodo, apiFetchUsers } from '../middleware'
 import { selectCurrentUserId } from '../selectors'
 
 export const ActionTypes = {
@@ -9,6 +9,9 @@ export const ActionTypes = {
   FETCH_TODO: "FETCH_TODO",
   FETCH_TODO_SUCCESS: "FETCH_TODO_SUCCESS",
   FETCH_TODO_FAILURE: "FETCH_TODO_FAILURE",
+  FETCH_USERS: "FETCH_USERS",
+  FETCH_USERS_SUCCESS: "FETCH_USERS_SUCCESS",
+  FETCH_USERS_FAILURE: "FETCH_USERS_FAILURE",
   DB_DISCONNECT: "DB_DISCONNECT"
 }
 
@@ -52,13 +55,29 @@ export const fetchTodo = () => (dispatch, getState) => {
   }
 }
 
+export const fetchUsers = () => (dispatch, getState) => {
+  apiFetchUsers({
+    type: ActionTypes.FETCH_USERS, 
+    filter: "ALL"});
+}
+
 export const fetchTodoSuccess = data => ({
   type: ActionTypes.FETCH_TODO_SUCCESS,
   data
 })
 
+export const fetchUsersSuccess = data => ({
+  type: ActionTypes.FETCH_USERS_SUCCESS,
+  data
+})
+
 export const fetchTodoFailure = error => ({
   type: ActionTypes.FETCH_TODO_FAILURE,
+  error
+})
+
+export const fetchUsersFailure = error => ({
+  type: ActionTypes.FETCH_USERS_FAILURE,
   error
 })
 

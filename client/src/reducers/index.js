@@ -3,24 +3,27 @@ import { combineReducers } from 'redux';
 
 export const todos = (state = [], action) => {
   switch (action.type) {
-      // case ActionTypes.SAVE_TODO:	
-      //   const existingTodoIdx = state.findIndex( t => t.id === action.item.id );
-      //   let newState;
-      //   if (existingTodoIdx > -1) {
-      //     newState = [...state];
-      //     newState[existingTodoIdx] = action.item
-      //   } else {
-      //     newState = state.concat([action.item]);
-      //   }
-      //   return newState;
       case ActionTypes.FETCH_TODO:
-        return { ...state, loading: true};
+        return { ...state, loading: true };
       case ActionTypes.FETCH_TODO_FAILURE:
         return { ...state, loading: false, error: action.error };
       case ActionTypes.FETCH_TODO_SUCCESS:
         return { loading: false, error: null, data: action.data };
       default:
         return state;
+  }
+}
+
+export const users = ( state = [], action) => {
+  switch (action.type) {
+    case ActionTypes.FETCH_USERS:
+      return { ...state, loading: true };
+    case ActionTypes.FETCH_USERS_FAILURE:
+      return { ...state, loading: false, error: action.error };
+    case ActionTypes.FETCH_USERS_SUCCESS:
+      return { loading: false, error: null, data: action.data }
+    default:
+      return state;
   }
 }
 
@@ -64,6 +67,7 @@ export const infoMessage = ( state = null, action) => {
 
 export default combineReducers({ 
   todos, 
+  users, 
   visibilityFilter,
   dialogVisibility,
   currentEditing,

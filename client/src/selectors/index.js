@@ -42,7 +42,17 @@ export const selectDialogVisibility = state => state.dialogVisibility
 
 export const selectDialogInitialValues = state => {
   if(state.currentEditing){
-    return state.todos.data.find( t => t.id === state.currentEditing)
+    const currentTodo = state.todos.data.find( t => t.id === state.currentEditing);
+    // return currentTodo;
+    return Object.assign(
+      {},
+      currentTodo,
+      {
+        due_date: format(currentTodo.due_date, 'yyyy-MM-dd'),
+        created_date: format(currentTodo.created_date, 'yyyy-MM-dd'),
+        modified_date: format(currentTodo.modified_date, 'yyyy-MM-dd')
+      }
+    )
   } else {
     return {
       created_date: format(new Date(), 'yyyy-MM-dd')
