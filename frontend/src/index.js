@@ -23,7 +23,7 @@ const store = createStore(
 );
 
 socket.onopen = (e) => {
-  store.dispatch(fetchUsers());
+  // store.dispatch(fetchUsers());
 }
 
 socket.onmessage = (message) => {

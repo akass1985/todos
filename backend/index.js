@@ -78,6 +78,48 @@ const saveTodo = (ws, item) => {
     });
 }
 
+const login = (ws, credentials) => {
+  console.log('RECEIVED LOGIN MESSAGE, filter=%s', JSON.stringify(credentials));
+  conn.query(
+    'SELECT id, login, password FROM users WHERE login=? AND password=?', 
+    [credentials.login, credentials.password], 
+    (err, rows) => {
+      if (err) throw err;
+
+      if (rows.length){
+        console.log("Rows.length=%s", rows.length);
+        const match = rows.find( user => user.login === credentials.login && user.password === credentials.password);
+        if (match){
+          console.log("MATCH: %s", JSON.stringify(match));
+          const answer = JSON.stringify({
+            type: 'LOGIN',
+            result: 'OK',
+            userId: match.id
+          });
+          ws.send(answer);
+          console.log('SENT: %s', answer);
+        } else {
+          console.log("DON'T MATCH");
+          const answer = JSON.stringify({
+            type: 'LOGIN',
+            result: 'FAIL',
+          });
+          ws.send(answer);
+          console.log('SENT: %s', answer);
+        }
+      } else {
+        console.log("ROWS.LENGTH IS %s", rows.length)
+        const answer = JSON.stringify({
+          type: 'LOGIN',
+          result: 'FAIL',
+        });
+        ws.send(answer);
+        console.log('SENT: %s', answer);
+      }
+    }
+  );
+}
+
 const wss = new WebSocket.Server({ port: 8888 });
 console.log('BACK IS STARTED!');
 
@@ -90,6 +132,7 @@ wss.on('connection', (ws) => {
         case "FETCH_TODO": sendTodos(ws, obj.userId); break;
         case "SAVE_TODO": saveTodo(ws, obj.item); break;
         case "FETCH_USERS": sendUsers(ws, obj.filter); break;
+        case "LOGIN": login(ws, obj.credentials); break;
         default:
           console.log("DEFAULT: TYPE(%s), MESSAGE (%s)", obj.type, message)
       }

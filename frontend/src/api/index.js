@@ -27,11 +27,11 @@ export const apiFetchUsers = (message) => {
   }
 }
 
-export const apiAuth = (message) => {
+export const apiLogin = (message) => {
   if(socket.readyState === WebSocket.OPEN) {
     socket.send(JSON.stringify({
       type: message.type,
-      login: message.login
+      credentials: message.credentials
     }))
   }
 }

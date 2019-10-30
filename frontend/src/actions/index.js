@@ -1,4 +1,4 @@
-import apiFetchTodos, { apiSaveTodo, apiFetchUsers } from '../api'
+import apiFetchTodos, { apiSaveTodo, apiFetchUsers, apiLogin } from '../api'
 import { selectCurrentUserId } from '../selectors'
 
 export const ActionTypes = {
@@ -13,7 +13,9 @@ export const ActionTypes = {
   FETCH_USERS_SUCCESS: "FETCH_USERS_SUCCESS",
   FETCH_USERS_FAILURE: "FETCH_USERS_FAILURE",
   DB_DISCONNECT: "DB_DISCONNECT",
-  GET_AUTH: "GET_AUTH"
+  LOGIN: "LOGIN",
+  LOGIN_SUCCESSFUL: "LOGIN_SUCCESSFUL",
+  LOGIN_FAILURE: "LOGIN_FAILURE"
 }
 
 export const VisibilityFilters = {
@@ -87,7 +89,37 @@ export const dbDisconnect = message => ({
   message
 })
 
-export const getAuth = credentials => ({
-  type: ActionTypes.GET_AUTH,
-  credentials
+// export const login = credentials => ({
+//   type: ActionTypes.GET_AUTH,
+//   credentials
+// })
+
+export const loginSuccessful = data => ({
+  type: ActionTypes.LOGIN_SUCCESSFUL,
+  data
 })
+
+export const loginFailure = error => ({
+  type: ActionTypes.LOGIN_FAILURE,
+  error
+})
+
+export const login = (credentials) => (dispatch, getState) => {
+    apiLogin({
+      type: ActionTypes.LOGIN,
+      credentials: credentials
+    }).then(
+      data => () => dispatch(loginSuccessful(data.data)),
+      error => dispatch(loginFailure(error))
+    );
+}
+
+// export const login = values => (dispatch, getState) => {
+//   apiLogin(values.login, values.password).then(
+//     data => () => dispatch(loginSuccessful(data.data)),
+//     error =>
+//       error.response.XXX === "aaa"
+//         ? "Неверный пароль"
+//         : "Произошла ошибка, попробуйте позднее"
+//   );
+// };

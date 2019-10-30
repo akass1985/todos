@@ -7,7 +7,7 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import { Form } from 'react-final-form'
 import { Field } from 'react-final-form-html5-validation'
-import { getAuth } from '../actions'
+import { login } from '../actions'
 
 const Auth = () => {
 
@@ -25,7 +25,10 @@ const Auth = () => {
             <Modal.Body>
                 <Container>
                     <Form 
-                        onSubmit={ (values) => dispatch(getAuth(values)) } 
+                        onSubmit={ (values) => 
+                            dispatch(login(values)).then(
+                                {}, 
+                                {}) } 
                         initialValues={{ login: "alexeykass", password: "alexeykass" }} 
                         render={( { handleSubmit, form, submitting, pristine, values }) => (
                             <form onSubmit={handleSubmit}>
