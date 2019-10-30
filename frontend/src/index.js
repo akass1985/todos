@@ -13,7 +13,8 @@ import {
   fetchUsersSuccess,  
   dbDisconnect, 
   loginSuccessful,
-  loginFailure} from './actions'
+  loginFailure,
+  fetchTodo} from './actions'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { socket } from './api'
 
@@ -29,6 +30,7 @@ socket.onopen = (e) => {
 }
 
 socket.onmessage = (message) => {
+  // alert(message.data);
   const obj = JSON.parse(message.data);
   if (obj.type){
     switch (obj.type){
@@ -38,9 +40,12 @@ socket.onmessage = (message) => {
         store.dispatch(fetchUsersSuccess(obj.data));
       case "LOGIN":
         if (obj.result === "OK"){
-          store.dispatch(loginSuccessful(obj.userId));
+          // store.dispatch(loginSuccessful(obj.userId));
+          // store.dispatch(fetchTodo());
+          break;
         } else {
-          store.dispatch(loginFailure(obj.error));
+          // store.dispatch(loginFailure(obj.error));
+          break;
         }
     }
   }

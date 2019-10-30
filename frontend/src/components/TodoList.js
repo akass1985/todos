@@ -9,7 +9,7 @@ import NavDropdown from 'react-bootstrap/NavDropdown'
 import Alert from 'react-bootstrap/Alert'
 import FilterLink from '../containers/FilterLink'
 import { VisibilityFilters, setDialogVisibilityAction, fetchTodo, editTodo } from '../actions'
-import { selectTodos, selectDialogVisibility, selectInfoMessage, selectVisibilityFilter } from '../selectors'
+import { selectTodos, selectDialogVisibility, selectInfoMessage, selectVisibilityFilter, selectAuth } from '../selectors'
 import Spinner from 'react-bootstrap/Spinner'
 import { todos } from '../reducers';
 import { setVisibilityFilter } from '../actions'
@@ -25,6 +25,11 @@ const TodoList = () => {
   const todos = useSelector(selectTodos);
   // const dialogVisibility =  useSelector(selectDialogVisibility);
   const infoMessage = useSelector(selectInfoMessage);
+  const isAuth = useSelector(selectAuth);
+
+  // if (isAuth){
+  //   dispatch(fetchTodo());
+  // }
 
   if (infoMessage){
     return (

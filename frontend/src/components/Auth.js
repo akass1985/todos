@@ -5,10 +5,12 @@ import Button from 'react-bootstrap/Button'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
+import Spinner from 'react-bootstrap/Spinner'
 import { Form } from 'react-final-form'
 import { Field } from 'react-final-form-html5-validation'
 import { login } from '../actions'
 import { selectAuth } from '../selectors'
+import { apiLogin } from '../api'
 
 const Auth = () => {
 
@@ -28,7 +30,8 @@ const Auth = () => {
             <Modal.Body>
                 <Container>
                     <Form 
-                        onSubmit={ (values) => dispatch(login(values)) } 
+                        // onSubmit={ (values) => dispatch(login(values)) } 
+                        onSubmit={ (values) => apiLogin(values, dispatch) }
                         initialValues={{ login: "alexeykass", password: "alexeykass" }} 
                         render={( { handleSubmit, form, submitting, pristine, values }) => (
                             <form onSubmit={handleSubmit}>
@@ -41,6 +44,14 @@ const Auth = () => {
                                             <Field
                                             name="login"
                                             component="input"
+                                            // const validateDates = (value, values) => {
+                                            //     var d1 = new Date(value), 
+                                            //         d2 = new Date(values.created_date);
+                                            //     if (!(isAfter(d1, d2) || isEqual(d1, d2))){
+                                            //         return "Дата окончания не может быть раньше даты создания";
+                                            //     }
+                                            // }
+                                            // validate={  }
                                             type="text" /> 
                                         </Col>
                                     </Row>

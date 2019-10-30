@@ -27,9 +27,20 @@ export const getVisibleTodos = (todos, filter) => {
 }
 
 export const selectTodos = state => getVisibleTodos(
-  state.todos.data || [],
+  (state.auth.userId && state.todos.data) || [],
   selectVisibilityFilter(state)
 )
+
+// export const selectTodos = state => {
+//   if (!state.auth.loading && !state.auth.error && state.auth.userId 
+//         && state.todos.data){
+//           return getVisibleTodos(
+//             state.todos.data,
+//             selectVisibilityFilter(state))
+//           } else {
+//             return [];
+//           }
+//   }
 
 // export const selectTodos = state => state.todos.data || [],
 //   selectVisibilityFilter(state)

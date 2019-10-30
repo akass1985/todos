@@ -23,7 +23,7 @@ const sendTodos = (ws, userId) => {
 
 const sendUsers = (ws, filter) => {
   console.log('RECEIVED FETCH_USERS MESSAGE, filter=%s', filter);
-  conn.query('SELECT * FROM users', (err, rows) => {
+  conn.query('SELECT  FROM users', (err, rows) => {
     if (err) throw err;
     const answer = JSON.stringify({
       type: "FETCH_USERS",
@@ -79,7 +79,7 @@ const saveTodo = (ws, item) => {
 }
 
 const login = (ws, credentials) => {
-  console.log('RECEIVED LOGIN MESSAGE, filter=%s', JSON.stringify(credentials));
+  console.log('RECEIVED LOGIN MESSAGE, credentials=%s', JSON.stringify(credentials));
   conn.query(
     'SELECT id, login, password FROM users WHERE login=? AND password=?', 
     [credentials.login, credentials.password], 
