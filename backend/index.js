@@ -103,6 +103,7 @@ const login = (ws, credentials) => {
           const answer = JSON.stringify({
             type: 'LOGIN',
             result: 'FAIL',
+            error: "Причина 1"
           });
           ws.send(answer);
           console.log('SENT: %s', answer);
@@ -112,6 +113,7 @@ const login = (ws, credentials) => {
         const answer = JSON.stringify({
           type: 'LOGIN',
           result: 'FAIL',
+          error: "Причина 2"
         });
         ws.send(answer);
         console.log('SENT: %s', answer);

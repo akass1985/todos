@@ -14,6 +14,19 @@ export const todos = (state = [], action) => {
   }
 }
 
+export const auth = (state = [], action) => {
+  switch (action.type){
+    case ActionTypes.LOGIN:
+      return { ...state, loading: true };
+    case ActionTypes.LOGIN_FAILURE:
+      return { ...state, loading: false, error: action.error, userId: null };
+    case ActionTypes.LOGIN_SUCCESSFUL:
+      return { loading: false, error: null, userId: action.data }
+    default:
+      return state
+  }
+}
+
 export const users = ( state = [], action) => {
   switch (action.type) {
     case ActionTypes.FETCH_USERS:
@@ -63,15 +76,6 @@ export const infoMessage = ( state = null, action) => {
       default:
           return state
     }
-}
-
-export const auth = (state = [], action) => {
-  switch (action.type){
-    case ActionTypes.GET_AUTH:
-      return action.credentials
-    default:
-      return state
-  }
 }
 
 export default combineReducers({ 

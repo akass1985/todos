@@ -11,7 +11,9 @@ import {
   fetchTodoFailure, 
   fetchUsers, 
   fetchUsersSuccess,  
-  dbDisconnect } from './actions'
+  dbDisconnect, 
+  loginSuccessful,
+  loginFailure} from './actions'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { socket } from './api'
 
@@ -34,6 +36,12 @@ socket.onmessage = (message) => {
         store.dispatch(fetchTodoSuccess(obj.data));
       case "FETCH_USERS": 
         store.dispatch(fetchUsersSuccess(obj.data));
+      case "LOGIN":
+        if (obj.result === "OK"){
+          store.dispatch(loginSuccessful(obj.userId));
+        } else {
+          store.dispatch(loginFailure(obj.error));
+        }
     }
   }
 }

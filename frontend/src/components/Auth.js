@@ -8,27 +8,27 @@ import Col from 'react-bootstrap/Col'
 import { Form } from 'react-final-form'
 import { Field } from 'react-final-form-html5-validation'
 import { login } from '../actions'
+import { selectAuth } from '../selectors'
 
 const Auth = () => {
 
     const dispatch = useDispatch();
+
+    const isAuth = useSelector(selectAuth);
 
     return (
         <Modal 
             size="sm"
             centered
             keyboard
-            show={true}>
+            show={!isAuth}>
             <Modal.Header>
                 <Modal.Title>Ты хто?</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <Container>
                     <Form 
-                        onSubmit={ (values) => 
-                            dispatch(login(values)).then(
-                                {}, 
-                                {}) } 
+                        onSubmit={ (values) => dispatch(login(values)) } 
                         initialValues={{ login: "alexeykass", password: "alexeykass" }} 
                         render={( { handleSubmit, form, submitting, pristine, values }) => (
                             <form onSubmit={handleSubmit}>

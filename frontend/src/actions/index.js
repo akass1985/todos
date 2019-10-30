@@ -108,18 +108,5 @@ export const login = (credentials) => (dispatch, getState) => {
     apiLogin({
       type: ActionTypes.LOGIN,
       credentials: credentials
-    }).then(
-      data => () => dispatch(loginSuccessful(data.data)),
-      error => dispatch(loginFailure(error))
-    );
+    })
 }
-
-// export const login = values => (dispatch, getState) => {
-//   apiLogin(values.login, values.password).then(
-//     data => () => dispatch(loginSuccessful(data.data)),
-//     error =>
-//       error.response.XXX === "aaa"
-//         ? "Неверный пароль"
-//         : "Произошла ошибка, попробуйте позднее"
-//   );
-// };

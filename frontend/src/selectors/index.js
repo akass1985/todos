@@ -66,3 +66,5 @@ export const selectInfoMessage = state => state.infoMessage
 export const selectVisibilityFilter = state => state.visibilityFilter || VisibilityFilters.SHOW_ALL
 
 export const selectUsers = state => state.users.data || [];
+
+export const selectAuth = state => state.auth.userId || null;
