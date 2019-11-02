@@ -45,13 +45,12 @@ const saveTodo = (ws, item, userId) => {
     console.log('UPDATING %s', JSON.stringify(item));
     conn.query(
       'UPDATE todos SET ? WHERE id=?', 
-      [item, item.id], 
+      [{...item, modified_date: new Date() }, item.id], 
       (err, res) => {
         if (err) throw err;
         const answer = JSON.stringify({
           type: "SAVE_TODO",
           result: "SUCCESS",
-          // data: rows,
           userId: userId
         });
         ws.send(answer);
@@ -68,7 +67,6 @@ const saveTodo = (ws, item, userId) => {
         const answer = JSON.stringify({
           type: "SAVE_TODO",
           result: "SUCCESS",
-          // data: rows,
           userId: userId
         });
         ws.send(answer);

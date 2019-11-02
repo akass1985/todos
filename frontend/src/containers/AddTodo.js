@@ -9,7 +9,7 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import { Form } from 'react-final-form'
 import { Field } from 'react-final-form-html5-validation'
-import { isAfter, isEqual }  from 'date-fns'
+import { isAfter, isEqual, format }  from 'date-fns'
 import { 
     selectDialogVisibility, 
     selectDialogInitialValues, 
@@ -128,7 +128,7 @@ const AddTodo = () => {
                                 </Row>
                                 <Row>
                                     <Col xs={col1} md={col1}><label>Дата обновления</label></Col>
-                                    <Col xs={col2} md={col2}><label>{dialogInitialValues.modified_date}</label></Col>
+                                    <Col xs={col2} md={col2}><label>{format(new Date(dialogInitialValues.modified_date), "dd.MM.yyyy")}</label></Col>
                                 </Row>
                                 <Row>
                                     <Col xs={col1} md={col1}><label>Приоритет</label></Col>
@@ -185,13 +185,14 @@ const AddTodo = () => {
                                     </Col>
                                 </Row>
                                 <div class="modal-footer">
-                                    <button
+                                    <Button
                                         type="button"
+                                        variant="danger"
                                         onClick={form.reset}
                                         disabled={submitting || pristine}
                                         >
                                         Сбросить
-                                        </button>
+                                    </Button>
                                     <Button 
                                         variant="secondary" 
                                         onClick={ () => dispatch(setDialogVisibilityAction(false))}>
