@@ -49,14 +49,19 @@ export const setDialogVisibilityAction = dialogVisibility => ({
     dialogVisibility
 })
 
-export const fetchTodo = () => (dispatch, getState) => {
-  const userId = selectCurrentUserId(getState());
+export const fetchTodo = userId => (dispatch, getState) => {
+  // const userId = selectCurrentUserId(getState());
   if (userId != null) {
     apiFetchTodos({
       type: ActionTypes.FETCH_TODO, 
       userId: userId});
   }
 }
+
+// export const fetchTodo = userId => ({
+//   type: ActionTypes.FETCH_TODO, 
+//   userId
+// })
 
 export const fetchUsers = () => (dispatch, getState) => {
   apiFetchUsers({
@@ -98,6 +103,9 @@ export const loginSuccessful = data => ({
   type: ActionTypes.LOGIN_SUCCESSFUL,
   data
 })
+
+// export const loginSuccessful = userId => (dispatch, getState) => 
+//   dispatch(fetchTodo())
 
 export const loginFailure = error => ({
   type: ActionTypes.LOGIN_FAILURE,

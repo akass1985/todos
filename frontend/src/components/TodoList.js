@@ -8,21 +8,25 @@ import Button from 'react-bootstrap/Button'
 import NavDropdown from 'react-bootstrap/NavDropdown'
 import Alert from 'react-bootstrap/Alert'
 import FilterLink from '../containers/FilterLink'
-import { VisibilityFilters, setDialogVisibilityAction, fetchTodo, editTodo } from '../actions'
-import { selectTodos, selectDialogVisibility, selectInfoMessage, selectVisibilityFilter } from '../selectors'
+import { VisibilityFilters, setDialogVisibilityAction, fetchTodo, editTodo, ActionTypes } from '../actions'
+import { selectTodos, selectDialogVisibility, selectInfoMessage, selectVisibilityFilter, selectUserId } from '../selectors'
 import Spinner from 'react-bootstrap/Spinner'
 import { todos } from '../reducers';
 import { setVisibilityFilter } from '../actions'
+import apiFetchTodos from '../api'
 
 const TodoList = () => {
 
   const dispatch = useDispatch();
 
-  useEffect( () => {
-    dispatch(fetchTodo());
-  }, []);
+  // useEffect( (userId) => {
+  //   dispatch(fetchTodo(userId));
+  // }, []);
+
+  const userId = useSelector(selectUserId);
 
   const todos = useSelector(selectTodos);
+  
   // const dialogVisibility =  useSelector(selectDialogVisibility);
   const infoMessage = useSelector(selectInfoMessage);
 
@@ -32,6 +36,10 @@ const TodoList = () => {
           {infoMessage}
       </Alert>    
     )
+  }
+
+  if (!todos){
+    return (<div></div>)
   }
 
   if (todos.loading) {
@@ -87,7 +95,8 @@ const TodoList = () => {
               По ответственным
           </FilterLink>
         </Nav>
-      <Table striped bordered hover size="sm">
+      <Table striped bordered hover size="sm"
+      onClick={ () => dispatch(fetchTodo(userId)) }>
           <thead>
                 <tr>
                   <th scope="col">Заголовок</th>

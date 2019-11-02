@@ -67,4 +67,6 @@ export const selectVisibilityFilter = state => state.visibilityFilter || Visibil
 
 export const selectUsers = state => state.users.data || [];
 
-export const selectAuth = state => state.auth.userId || null;
+export const selectAuth = state => state.auth || null;
+
+export const selectUserId = state => state.auth.userId || null;

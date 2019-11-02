@@ -21,7 +21,7 @@ export const auth = (state = [], action) => {
     case ActionTypes.LOGIN_FAILURE:
       return { ...state, loading: false, error: action.error, userId: null };
     case ActionTypes.LOGIN_SUCCESSFUL:
-      return { loading: false, error: null, userId: action.data }
+      return { ...state, loading: false, error: null, userId: action.data }
     default:
       return state
   }

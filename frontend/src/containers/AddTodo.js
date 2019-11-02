@@ -19,9 +19,9 @@ const AddTodo = () => {
 
     const dispatch = useDispatch();
 
-    useEffect( () => {
-        dispatch(fetchUsers());
-      }, []);
+    // useEffect( () => {
+    //     dispatch(fetchUsers());
+    //   }, []);
 
     const dialogVisibility = useSelector(selectDialogVisibility);
     const dialogInitialValues = useSelector(selectDialogInitialValues);
@@ -137,12 +137,7 @@ const AddTodo = () => {
                                     </option>)}
                                 </Field>
                             </div>
-                        </form>
-                    )} 
-                />
-            </Modal.Body>
-            <Modal.Footer>
-                <Button 
+                            <Button 
                     variant="secondary" 
                     onClick={ () => dispatch(setDialogVisibilityAction(false))}>
                     Закрыть
@@ -151,6 +146,12 @@ const AddTodo = () => {
                     type="submit" variant="primary">
                     Сохранить
                 </Button>
+                        </form>
+                    )} 
+                />
+            </Modal.Body>
+            <Modal.Footer>
+                
                 </Modal.Footer>
         </Modal>
     )

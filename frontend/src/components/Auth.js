@@ -5,80 +5,78 @@ import Button from 'react-bootstrap/Button'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
+import Spinner from 'react-bootstrap/Spinner'
 import { Form } from 'react-final-form'
 import { Field } from 'react-final-form-html5-validation'
 import { login } from '../actions'
 import { selectAuth } from '../selectors'
+import { apiLogin } from '../api'
 
 const Auth = () => {
 
     const dispatch = useDispatch();
 
-    const isAuth = useSelector(selectAuth);
+    let nodeLogin;
+    let nodePassword;
+
+    const auth = useSelector(selectAuth);
+    
+    const onSubmit = () => { dispatch(login({
+        login: nodeLogin.value.trim(),
+        password: nodePassword.value.trim()
+    }))}
 
     return (
         <Modal 
             size="sm"
             centered
             keyboard
-            show={!isAuth}>
+            show={!auth.userId}>
             <Modal.Header>
                 <Modal.Title>Ты хто?</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <Container>
-                    <Form 
-                        onSubmit={ (values) => dispatch(login(values)) } 
-                        initialValues={{ login: "alexeykass", password: "alexeykass" }} 
-                        render={( { handleSubmit, form, submitting, pristine, values }) => (
-                            <form onSubmit={handleSubmit}>
-                                <div>
-                                    <Row className="show-grid">
-                                        <Col xs={3} md={3}>
-                                            <label>Логин</label>
-                                        </Col>
-                                        <Col xs={7} md={7}>
-                                            <Field
-                                            name="login"
-                                            component="input"
-                                            type="text" /> 
-                                        </Col>
-                                    </Row>
-
-                                    <Row className="show-grid">
-                                        <Col xs={3} md={3}>
-                                            <label>Пароль</label>    
-                                        </Col>
-                                        <Col xs={7} md={7}>
-                                            <Field
-                                                name="password"
-                                                component="input"
-                                                type="password" />    
-                                        </Col>
-                                        <Button 
-                variant="secondary" 
-                // onClick={ () => dispatch(setDialogVisibilityAction(false))}
-                >
-                Закрыть
-            </Button>
-            <Button 
-                type="submit" variant="primary">
-                Log In
-            </Button>
-                                    </Row>
-                                </div>
-                                <div>
-                                    <pre>
-                                        {JSON.stringify(values)}
-                                    </pre>
-                                </div>
-                            </form>
-                        )} 
-                    />
+                    <Row className="show-grid">
+                        <Col xs={3} md={3}>
+                            <label>Логин</label>
+                        </Col>
+                        <Col xs={7} md={7}>
+                            <input 
+                                ref={node => (nodeLogin = node)}
+                                type="text" />
+                        </Col>
+                    </Row>
+                    <Row className="show-grid">
+                        <Col xs={3} md={3}>
+                            <label>Пароль</label>    
+                        </Col>
+                        <Col xs={7} md={7}>
+                            <input 
+                                ref={node => (nodePassword = node)}
+                                type="password" />
+                        </Col>
+                    </Row>
                 </Container>
             </Modal.Body>
             <Modal.Footer>
-            
+            {auth.loading && 
+                <Button variant="primary" disabled>
+                    <Spinner
+                    as="span"
+                    animation="grow"
+                    size="sm"
+                    role="status"
+                    aria-hidden="true"
+                    />
+                    Проверка...
+                </Button>}
+            {!auth.loading && 
+                <Button 
+                    onClick={ () => onSubmit() }
+                    variant="primary">
+                Log In
+            </Button>}
             </Modal.Footer>
         </Modal>
     )

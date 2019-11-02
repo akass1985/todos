@@ -13,7 +13,8 @@ import {
   fetchUsersSuccess,  
   dbDisconnect, 
   loginSuccessful,
-  loginFailure} from './actions'
+  loginFailure,
+  fetchTodo} from './actions'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { socket } from './api'
 
@@ -25,7 +26,6 @@ const store = createStore(
 );
 
 socket.onopen = (e) => {
-  // store.dispatch(fetchUsers());
 }
 
 socket.onmessage = (message) => {
@@ -33,15 +33,18 @@ socket.onmessage = (message) => {
   if (obj.type){
     switch (obj.type){
       case "FETCH_TODOS": 
-        store.dispatch(fetchTodoSuccess(obj.data));
+        store.dispatch(fetchTodoSuccess(obj.data)); break;
       case "FETCH_USERS": 
-        store.dispatch(fetchUsersSuccess(obj.data));
-      case "LOGIN":
-        if (obj.result === "OK"){
-          store.dispatch(loginSuccessful(obj.userId));
-        } else {
-          store.dispatch(loginFailure(obj.error));
-        }
+        store.dispatch(fetchUsersSuccess(obj.data)); break
+      case "LOGIN": {
+          if (obj.result === "OK"){
+            store.dispatch(loginSuccessful(obj.userId));
+            store.dispatch(fetchTodo(obj.userId));
+            store.dispatch(fetchUsers());
+          } else {
+            store.dispatch(loginFailure(obj.error));
+          }
+        }; break;
     }
   }
 }
@@ -55,7 +58,7 @@ socket.onclose = (event) => {
 };
 
 socket.onerror = (error) => {
-  store.dispatch(fetchTodoFailure(error));
+  // store.dispatch(fetchTodoFailure(error));
 };
 
 render(
