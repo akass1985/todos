@@ -19,6 +19,8 @@ const Auth = () => {
     let nodeLogin;
     let nodePassword;
 
+    const [col1, col2] = [3, 7];
+
     const auth = useSelector(selectAuth);
     
     const onSubmit = () => { dispatch(login({
@@ -38,10 +40,10 @@ const Auth = () => {
             <Modal.Body>
                 <Container>
                     <Row className="show-grid">
-                        <Col xs={3} md={3}>
+                        <Col xs={col1} md={col1}>
                             <label>Логин</label>
                         </Col>
-                        <Col xs={7} md={7}>
+                        <Col xs={col2} md={col2}>
                             <input 
                                 ref={node => (nodeLogin = node)}
                                 type="text"
@@ -49,10 +51,10 @@ const Auth = () => {
                         </Col>
                     </Row>
                     <Row className="show-grid">
-                        <Col xs={3} md={3}>
+                        <Col xs={col1} md={col1}>
                             <label>Пароль</label>    
                         </Col>
-                        <Col xs={7} md={7}>
+                        <Col xs={col2} md={col2}>
                             <input 
                                 ref={node => (nodePassword = node)}
                                 type="password"
@@ -73,6 +75,11 @@ const Auth = () => {
                     />
                     Проверка...
                 </Button>}
+                <Button 
+                    onClick={ () => onSubmit() }
+                    variant="secondary">
+                Close
+            </Button>
             {!auth.loading && 
                 <Button 
                     onClick={ () => onSubmit() }

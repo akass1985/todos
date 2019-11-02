@@ -4,6 +4,9 @@ import { saveTodo, editTodo, setDialogVisibilityAction } from '../actions'
 import Spinner from 'react-bootstrap/Spinner'
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
+import Container from 'react-bootstrap/Container'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
 import { Form } from 'react-final-form'
 import { Field } from 'react-final-form-html5-validation'
 import { isAfter, isEqual }  from 'date-fns'
@@ -19,6 +22,8 @@ import { fetchUsers } from '../actions'
 const AddTodo = () => {
 
     const dispatch = useDispatch();
+
+    const [col1, col2] = [5, 7];
 
     // useEffect( () => {
     //     dispatch(fetchUsers());
@@ -49,112 +54,124 @@ const AddTodo = () => {
                 <Modal.Title>{currentEditing ? 'Редактирование' : 'Добавление' } задачи</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <Form 
-                    onSubmit={ (values) => {
-                        dispatch(saveTodo(values, userId));
-                        dispatch(setDialogVisibilityAction(false));
-                    }} 
-                    initialValues={dialogInitialValues} 
-                    render={( { handleSubmit, form, submitting, pristine, values }) => (
-                        <form onSubmit={handleSubmit}>
-                            <div>
-                                <label>Заголовок</label>
-                                <Field
-                                    name="title"
-                                    component="input"
-                                    type="text"
-                                    placeholder="Название задачи"
-                                />
-                            </div>
-                            <div>
-                                <label>Описание</label>
-                                <Field name="description" component="textarea" placeholder="Опишите здесь суть задачи" />
-                            </div>
-                            <div>
-                                <Field
-                                    name="due_date"
-                                    component="input"
-                                    type="date"
-                                    validate={validateDates}>
-                                    {({ input, meta }) => (
-                                    <div>
-                                        <label>Дата окончания</label>
-                                        <input {...input} type="date" placeholder="Дата окончания" />
-                                        {meta.validating && <Spinner />}
-                                    </div>
-                                )}
-                                </Field>
-                            </div>
-                            <div>
-                                <label>Дата создания</label>
-                                <Field
-                                    name="created_date"
-                                    component="input"
-                                    type="date"
-                                />
-                            </div>
-                            <div>
-                                <label>Дата обновления</label>
-                                <Field
-                                    name="modified_date"
-                                    component="input"
-                                    type="date"
-                                    readonly="true"
-                                />
-                            </div>
-                            <div>
-                                <label>Приоритет</label>
-                                <Field name="priority" component="select">
-                                    <option />
-                                    <option value="низкий">низкий</option>
-                                    <option value="средний" selected>средний</option>
-                                    <option value="высокий">высокий</option>
-                                </Field>
-                            </div>
-                            <div>
-                                <label>Статус</label>
-                                <Field name="status" component="select">
-                                    <option />
-                                    <option value="к выполнению">к выполнению</option>
-                                    <option value="выполняется">выполняется</option>
-                                    <option value="выполнена">выполнена</option>
-                                    <option value="отменена">отменена</option>
-                                </Field>
-                            </div>
-                            <div>
-                                <label>Создатель</label>
-                                <Field name="owner" component="select">
-                                    <option />
-                                    {users.map( user => <option value={user.id}>
-                                        {user.firstname} {user.middlename} {user.lastname}
-                                    </option>)}
-                                </Field>
-                            </div>
-                            <div>
-                                <label>Ответственный</label>
-                                <Field name="assigned_user" component="select">
-                                    <option />
-                                    {users.map( user => <option value={user.id}>
-                                        {user.firstname} {user.middlename} {user.lastname}
-                                    </option>)}
-                                </Field>
-                            </div>
-                            <Button 
-                    variant="secondary" 
-                    onClick={ () => dispatch(setDialogVisibilityAction(false))}>
-                    Закрыть
-                </Button>
-                <Button 
-                    type="submit" variant="primary">
-                    Сохранить
-                </Button>
-                        </form>
-                    )} 
-                />
+                <Container>
+                    <Form 
+                        onSubmit={ (values) => {
+                            dispatch(saveTodo(values, userId));
+                            dispatch(setDialogVisibilityAction(false));
+                        }} 
+                        initialValues={dialogInitialValues} 
+                        render={( { handleSubmit, form, submitting, pristine, values }) => (
+                            <form onSubmit={handleSubmit}>
+                                <Row>
+                                    <Col xs={col1} md={col1}>
+                                        <label>Заголовок</label>
+                                    </Col>
+                                    <Col xs={col2} md={col2}>
+                                        <Field
+                                            name="title"
+                                            component="input"
+                                            type="text"
+                                            placeholder="Название задачи"
+                                        />
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col xs={col1} md={col1}><label>Описание</label></Col>
+                                    <Col xs={col2} md={col2}><Field name="description" component="textarea" placeholder="Опишите здесь суть задачи" rows="3"/></Col>
+                                </Row>
+                                <Row>
+                                    <Col xs={col1} md={col1}><label>Дата окончания</label></Col>
+                                    <Col xs={col2} md={col2}>
+                                    <Field
+                                        name="due_date"
+                                        component="input"
+                                        type="date"
+                                        validate={validateDates}>
+                                        {({ input, meta }) => (
+                                        <div>
+                                            <input {...input} type="date" placeholder="Дата окончания" />
+                                            {meta.validating && <Spinner />}
+                                        </div>
+                                    )}
+                                    </Field>
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col xs={col1} md={col1}><label>Дата создания</label></Col>
+                                    <Col xs={col2} md={col2}>
+                                    <Field
+                                        name="created_date"
+                                        component="input"
+                                        type="date"
+                                    />
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col xs={col1} md={col1}><label>Дата обновления</label></Col>
+                                    <Col xs={col2} md={col2}><label>{dialogInitialValues.modified_date}</label></Col>
+                                </Row>
+                                <Row>
+                                    <Col xs={col1} md={col1}><label>Приоритет</label></Col>
+                                    <Col xs={col2} md={col2}>
+                                    <Field name="priority" component="select">
+                                        <option />
+                                        <option value="низкий">низкий</option>
+                                        <option value="средний" selected>средний</option>
+                                        <option value="высокий">высокий</option>
+                                    </Field>
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col xs={col1} md={col1}><label>Статус</label></Col>
+                                    <Col xs={col2} md={col2}>
+                                    <Field name="status" component="select">
+                                        <option />
+                                        <option value="к выполнению">к выполнению</option>
+                                        <option value="выполняется">выполняется</option>
+                                        <option value="выполнена">выполнена</option>
+                                        <option value="отменена">отменена</option>
+                                    </Field>
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col xs={col1} md={col1}><label>Создатель</label></Col>
+                                    <Col xs={col2} md={col2}>
+                                    <Field name="owner" component="select">
+                                        <option />
+                                        {users.map( user => <option value={user.id}>
+                                            {user.firstname} {user.middlename} {user.lastname}
+                                        </option>)}
+                                    </Field>
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col xs={col1} md={col1}><label>Ответственный</label></Col>
+                                    <Col xs={col2} md={col2}>
+                                    <Field name="assigned_user" component="select">
+                                        <option />
+                                        {users.map( user => <option value={user.id}>
+                                            {user.firstname} {user.middlename} {user.lastname}
+                                        </option>)}
+                                    </Field>
+                                    </Col>
+                                </Row>
+                                <div class="modal-footer">
+                                    <Button 
+                                        variant="secondary" 
+                                        onClick={ () => dispatch(setDialogVisibilityAction(false))}>
+                                        Закрыть
+                                    </Button>
+                                    <Button 
+                                        type="submit" variant="primary">
+                                        Сохранить
+                                    </Button>
+                                </div>
+                            </form>
+                        )} 
+                    />
+                </Container>
             </Modal.Body>
-            <Modal.Footer>
-                
-                </Modal.Footer>
         </Modal>
     )
 }

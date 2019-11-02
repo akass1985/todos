@@ -1,0 +1,49 @@
+*[name~="title"] {
+    min-width: 100%;
+}
+
+*[name~="description"] {
+    min-width: 100%;
+}
+
+*[name~="due_date"] {
+    min-width: 100%;
+}
+
+*[name~="created_date"] {
+    min-width: 100%;
+}
+
+*[name~="modified_date"] {
+    min-width: 100%;
+}
+
+*[name~="priority"] {
+    min-width: 100%;
+}
+
+*[name~="status"] {
+    min-width: 100%;
+}
+
+*[name~="owner"] {
+    min-width: 100%;
+}
+
+*[name~="assigned_user"] {
+    min-width: 100%;
+}
+
+.modal-footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 1rem;
+    border-top: 1px solid #dee2e6;
+    border-bottom-right-radius: .3rem;
+    border-bottom-left-radius: .3rem;
+}
+
+.modal-footer>:not(:first-child){
+    margin-left: .25rem;
+}

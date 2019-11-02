@@ -18,6 +18,7 @@ import {
   saveTodoSuccess,
   saveTodoFailure} from './actions'
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './styles.css'
 import { socket } from './api'
 
 const store = createStore(
