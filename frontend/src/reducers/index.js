@@ -13,6 +13,7 @@ export const todos = (state = [], action) => {
         return { ...state, loading: false, error: action.error };
 
       case ActionTypes.SAVE_TODO_SUCCESS:
+        return { ...state, loading: false, error: null }
       case ActionTypes.FETCH_TODO_SUCCESS:
         return { loading: false, error: null, data: action.data };
       default:
