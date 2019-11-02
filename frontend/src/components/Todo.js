@@ -11,7 +11,7 @@ const Todo = ({ onClick, completed, todo }) => {
 
   const getAssignedUser = id => {
     const user = users.find( user => user.id === id );
-    return user ? `${user.firstname} ${user.middlename} ${user.lastname}` : "";
+    return user ? `${user.lastname} ${user.firstname} ${user.middlename}` : "";
   }
 
   return (

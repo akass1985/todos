@@ -14,6 +14,7 @@ const sendTodos = (ws, userId) => {
     if (err) throw err;
     const answer = JSON.stringify({
       type: "FETCH_TODOS",
+      result: "SUCCESS",
       data: rows
     });
     ws.send(answer);
@@ -27,6 +28,7 @@ const sendUsers = (ws, filter) => {
     if (err) throw err;
     const answer = JSON.stringify({
       type: "FETCH_USERS",
+      result: "SUCCESS",
       data: rows
     });
     ws.send(answer);
@@ -35,47 +37,44 @@ const sendUsers = (ws, filter) => {
   });
 }
 
-const saveTodo = (ws, item) => {
+const saveTodo = (ws, item, userId) => {
   console.log('RECEIVED SAVE_TODO MESSAGE: %s', JSON.stringify(item));
-  console.log('ITEM ID: %s', item.id);
-  conn.query(
-    'SELECT * FROM todos WHERE id=?', 
-    [item.id], 
-    (err, rows) => {
-      if (err) throw err;
-
-      console.log('SELECT RESULT: %s', rows.length);
-
-      if (rows.length === 0){
-        // insert
-        console.log('INSERT');
-        conn.query(
-          'INSERT INTO todos SET ?', 
-          item, 
-          (err, res) => {
-            // if (err) throw err;
-            console.log('ISERTING ERROR: %s', JSON.stringify(err));
-            console.log(res.insertId);
-          })
-      } else {
-        // var sql = "UPDATE todos SET ? WHERE ?";
-        // var id = item.id;
-        // delete item['id'];
-        console.log('ITEM AFTER DEL ID: %s', JSON.stringify(item));
-        // var updates = item;
-        // sql = conn.format(sql, [item, item.id]);
-        console.log(">>>>>>>>>> %s", sql);
-        // update
-        conn.query(
-          'UPDATE todos SET ? WHERE id=?', 
-          [item, item.id], 
-          (err, res) => {
-            if (err) throw err;
-            console.log(res);
-          })
-        console.log('UPDATE >>> %s', sql)
-      }
-    });
+  console.log('WITH USERID=%s', userId);
+  if (item.id){
+    // UPDATE
+    console.log('UPDATING %s', JSON.stringify(item));
+    conn.query(
+      'UPDATE todos SET ? WHERE id=?', 
+      [item, item.id], 
+      (err, res) => {
+        if (err) throw err;
+        const answer = JSON.stringify({
+          type: "SAVE_TODO",
+          result: "SUCCESS",
+          // data: rows,
+          userId: userId
+        });
+        ws.send(answer);
+        console.log("SAVE RESULT IS %s", res.affectedRows > 0 ? 'OK' : 'FAIL');
+      })
+  } else {
+    // INSERT
+    console.log('INSERTING %s', JSON.stringify(item));
+    conn.query(
+      'INSERT INTO todos SET ?', 
+      item, 
+      (err, res) => {
+        if (err) throw err;
+        const answer = JSON.stringify({
+          type: "SAVE_TODO",
+          result: "SUCCESS",
+          // data: rows,
+          userId: userId
+        });
+        ws.send(answer);
+        console.log("SAVE RESULT IS %s", res.affectedRows > 0 ? 'OK' : 'FAIL');
+      })
+  }
 }
 
 const login = (ws, credentials) => {
@@ -93,7 +92,7 @@ const login = (ws, credentials) => {
           console.log("MATCH: %s", JSON.stringify(match));
           const answer = JSON.stringify({
             type: 'LOGIN',
-            result: 'OK',
+            result: 'SUCCESS',
             userId: match.id
           });
           ws.send(answer);
@@ -102,7 +101,7 @@ const login = (ws, credentials) => {
           console.log("DON'T MATCH");
           const answer = JSON.stringify({
             type: 'LOGIN',
-            result: 'FAIL',
+            result: 'FAILURE',
             error: "Причина 1"
           });
           ws.send(answer);
@@ -112,7 +111,7 @@ const login = (ws, credentials) => {
         console.log("ROWS.LENGTH IS %s", rows.length)
         const answer = JSON.stringify({
           type: 'LOGIN',
-          result: 'FAIL',
+          result: 'FAILURE',
           error: "Причина 2"
         });
         ws.send(answer);
@@ -132,7 +131,7 @@ wss.on('connection', (ws) => {
     if (obj.type){
       switch (obj.type){
         case "FETCH_TODO": sendTodos(ws, obj.userId); break;
-        case "SAVE_TODO": saveTodo(ws, obj.item); break;
+        case "SAVE_TODO": saveTodo(ws, obj.item, obj.userId); break;
         case "FETCH_USERS": sendUsers(ws, obj.filter); break;
         case "LOGIN": login(ws, obj.credentials); break;
         default:

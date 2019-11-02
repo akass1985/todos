@@ -13,7 +13,8 @@ export const apiSaveTodo = (message) => {
   if (socket.readyState === WebSocket.OPEN) {
     socket.send(JSON.stringify({
       type: message.type, 
-      item: message.item
+      item: message.item,
+      userId: message.userId
     }))
   }
 }

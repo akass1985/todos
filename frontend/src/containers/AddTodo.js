@@ -11,7 +11,8 @@ import {
     selectDialogVisibility, 
     selectDialogInitialValues, 
     selectCurrentEditing, 
-    selectUsers 
+    selectUsers, 
+    selectUserId
 } from '../selectors'
 import { fetchUsers } from '../actions'
 
@@ -27,6 +28,7 @@ const AddTodo = () => {
     const dialogInitialValues = useSelector(selectDialogInitialValues);
     const currentEditing = useSelector(selectCurrentEditing);
     const users = useSelector(selectUsers);
+    const userId = useSelector(selectUserId);
 
     let values
   
@@ -49,7 +51,7 @@ const AddTodo = () => {
             <Modal.Body>
                 <Form 
                     onSubmit={ (values) => {
-                        dispatch(saveTodo(values));
+                        dispatch(saveTodo(values, userId));
                         dispatch(setDialogVisibilityAction(false));
                     }} 
                     initialValues={dialogInitialValues} 

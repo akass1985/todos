@@ -3,10 +3,16 @@ import { combineReducers } from 'redux';
 
 export const todos = (state = [], action) => {
   switch (action.type) {
+
+      case ActionTypes.SAVE_TODO:
       case ActionTypes.FETCH_TODO:
         return { ...state, loading: true };
+
+      case ActionTypes.SAVE_TODO_FAILURE:
       case ActionTypes.FETCH_TODO_FAILURE:
         return { ...state, loading: false, error: action.error };
+
+      case ActionTypes.SAVE_TODO_SUCCESS:
       case ActionTypes.FETCH_TODO_SUCCESS:
         return { loading: false, error: null, data: action.data };
       default:

@@ -44,7 +44,8 @@ const Auth = () => {
                         <Col xs={7} md={7}>
                             <input 
                                 ref={node => (nodeLogin = node)}
-                                type="text" />
+                                type="text"
+                                value="alexeykass" />
                         </Col>
                     </Row>
                     <Row className="show-grid">
@@ -54,7 +55,8 @@ const Auth = () => {
                         <Col xs={7} md={7}>
                             <input 
                                 ref={node => (nodePassword = node)}
-                                type="password" />
+                                type="password"
+                                value="alexeykass" />
                         </Col>
                     </Row>
                 </Container>

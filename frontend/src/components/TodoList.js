@@ -5,6 +5,9 @@ import Todo from './Todo'
 import Nav from 'react-bootstrap/Nav'
 import Table from 'react-bootstrap/Table'
 import Button from 'react-bootstrap/Button'
+import Container from 'react-bootstrap/Container'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
 import NavDropdown from 'react-bootstrap/NavDropdown'
 import Alert from 'react-bootstrap/Alert'
 import FilterLink from '../containers/FilterLink'
@@ -55,13 +58,19 @@ const TodoList = () => {
   }
 
   return (
-    <div>
-      <h1>Задачи</h1>
-      <Button
-        variant="primary"
-        onClick={ () => dispatch(setDialogVisibilityAction(true)) }>
-        Добавить задачу
-      </Button>
+    <Container fluid>
+      <Row>
+        <Col className="d-flex align-items-center justify-content-center">
+          <h1>Задачи</h1>
+        </Col>
+        <Col className="d-flex align-items-center justify-content-center">
+          <Button
+            variant="primary"
+            onClick={ () => dispatch(setDialogVisibilityAction(true)) }>
+            Добавить задачу
+          </Button>
+        </Col>
+      </Row>
       <Nav variant="pills" defaultActiveKey={VisibilityFilters.SHOW_ALL}>
           <FilterLink filter={VisibilityFilters.SHOW_ALL}>
               Без группировки
@@ -116,7 +125,7 @@ const TodoList = () => {
                   )}
               </tbody>
       </Table>
-    </div>
+    </Container>
   )
 };
 

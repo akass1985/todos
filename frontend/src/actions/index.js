@@ -3,6 +3,8 @@ import { selectCurrentUserId } from '../selectors'
 
 export const ActionTypes = {
   SAVE_TODO: "SAVE_TODO",
+  SAVE_TODO_SUCCESS: "SAVE_TODO_SUCCESS",
+  SAVE_TODO_FAILURE: "SAVE_TODO_FAILURE",
   EDIT_TODO: "EDIT_TODO",
   SET_VISIBILITY_FILTER: "SET_VISIILITY_FILTER",
   SET_DIALOG_VISIBILITY: "SET_DIALOG_VISIBILITY",
@@ -26,14 +28,25 @@ export const VisibilityFilters = {
   SHOW_BY_DUE_DATE_ON_HALF_YEAR: 'SHOW_BY_DUE_DATE_ON_HALF_YEAR',
   SHOW_BY_ASSIGNED_USERS: 'SHOW_BY_ASSIGNED_USERS'
 }
-
-export const saveTodo = item => (dispatch, getState) => (
+// SAVE TODO
+export const saveTodo = (item, userId) => (dispatch, getState) => (
   apiSaveTodo({
     type: ActionTypes.SAVE_TODO,
-    item: item
+    item: item,
+    userId: userId
   })
 )
 
+export const saveTodoSuccess = data => ({
+  type: ActionTypes.SAVE_TODO_SUCCESS,
+  data
+})
+
+export const saveTodoFailure = error => ({
+  type: ActionTypes.SAVE_TODO_FAILURE,
+  error
+})
+// EDIT TODO
 export const editTodo = id => ({
   type: ActionTypes.EDIT_TODO,
   id
@@ -48,7 +61,7 @@ export const setDialogVisibilityAction = dialogVisibility => ({
     type: ActionTypes.SET_DIALOG_VISIBILITY,
     dialogVisibility
 })
-
+// FETCH TODO
 export const fetchTodo = userId => (dispatch, getState) => {
   // const userId = selectCurrentUserId(getState());
   if (userId != null) {
@@ -58,10 +71,15 @@ export const fetchTodo = userId => (dispatch, getState) => {
   }
 }
 
-// export const fetchTodo = userId => ({
-//   type: ActionTypes.FETCH_TODO, 
-//   userId
-// })
+export const fetchTodoSuccess = data => ({
+  type: ActionTypes.FETCH_TODO_SUCCESS,
+  data
+})
+
+export const fetchTodoFailure = error => ({
+  type: ActionTypes.FETCH_TODO_FAILURE,
+  error
+})
 
 export const fetchUsers = () => (dispatch, getState) => {
   apiFetchUsers({
@@ -69,19 +87,9 @@ export const fetchUsers = () => (dispatch, getState) => {
     filter: "ALL"});
 }
 
-export const fetchTodoSuccess = data => ({
-  type: ActionTypes.FETCH_TODO_SUCCESS,
-  data
-})
-
 export const fetchUsersSuccess = data => ({
   type: ActionTypes.FETCH_USERS_SUCCESS,
   data
-})
-
-export const fetchTodoFailure = error => ({
-  type: ActionTypes.FETCH_TODO_FAILURE,
-  error
 })
 
 export const fetchUsersFailure = error => ({

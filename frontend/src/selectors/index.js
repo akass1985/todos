@@ -1,19 +1,29 @@
 import  { format, addWeeks, addMonths, isBefore, isSameDay, startOfDay }  from 'date-fns'
 import { VisibilityFilters } from '../actions'
+import { useSelector } from 'react-redux'
 
-export const getVisibleTodos = (todos, filter) => {
+export const getVisibleTodos = (todos, users, filter) => {
   const today = startOfDay(new Date());
-
-//   const due_date = new Date(todo.due_date);
-
-// return !isBefore(due_date, today) && isBefore(due_date, addMonths(today, 6)})
 
   switch (filter) {
     case VisibilityFilters.SHOW_ALL:
-        return [...todos].sort( (a,b) => isBefore(new Date(a.modified_date), new Date(b.modified_date)) ? -1 : 1 )
+        return [...todos].sort( (a,b) => isBefore(new Date(a.modified_date), new Date(b.modified_date)) ? 1 : -1 )
 
     case VisibilityFilters.SHOW_BY_ASSIGNED_USERS:
-        return [...todos].sort( (a, b) => a.assigned_user < b.assigned_user ? -1 : 1 )
+        return [...todos].sort( (a, b) => {
+          const u_a = users.find( user => user.id === a.assigned_user);
+          const u_b = users.find( user => user.id === b.assigned_user);
+          if (u_a && u_b){
+            if (u_a.lastname+u_a.firstname+u_a.middlename < u_b.lastname+u_b.firstname+u_b.middlename) {
+              return -11;
+            } else {
+              return 1;
+            }
+          } else {
+            return 0;
+          }
+        }
+        );
 
     case VisibilityFilters.SHOW_BY_DUE_DATE_ON_TODAY:
         return todos.filter( todo => isSameDay(new Date(todo.due_date), today))
@@ -43,12 +53,9 @@ export const getVisibleTodos = (todos, filter) => {
 
 export const selectTodos = state => getVisibleTodos(
   state.todos.data || [],
+  state.users.data || [],
   selectVisibilityFilter(state)
 )
-
-// export const selectTodos = state => state.todos.data || [],
-//   selectVisibilityFilter(state)
-// )
 
 export const selectCurrentUserId = state => state.currentUserId || 1;
 
