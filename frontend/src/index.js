@@ -49,7 +49,6 @@ socket.onmessage = (message) => {
           }
         }; break;
       case "SAVE_TODO":{
-          alert(JSON.stringify(obj));
           if (obj.result === "SUCCESS"){
             store.dispatch(saveTodoSuccess(obj.userId));
             store.dispatch(fetchTodo(obj.userId));

@@ -45,6 +45,10 @@ const AddTodo = () => {
         }
     }
 
+    const validateText = (value, values) => {
+        if (value && !value.match(/\S+/)) return "Необходимо заполнить поле"
+    }
+
     return (
         <Modal 
             size="lg"
@@ -73,12 +77,27 @@ const AddTodo = () => {
                                             component="input"
                                             type="text"
                                             placeholder="Название задачи"
-                                        />
+                                            validate={validateText}>
+                                            {({ input, meta }) => (
+                                            <div>
+                                                <input {...input} type="text" placeholder="Название задачи" />
+                                                {meta.validating && <Spinner />}
+                                            </div>
+                                            )}
+                                        </Field>
                                     </Col>
                                 </Row>
                                 <Row>
-                                    <Col xs={col1} md={col1}><label>Описание</label></Col>
-                                    <Col xs={col2} md={col2}><Field name="description" component="textarea" placeholder="Опишите здесь суть задачи" rows="3"/></Col>
+                                    <Col xs={col1} md={col1}>
+                                        <label>Описание</label>
+                                    </Col>
+                                    <Col xs={col2} md={col2}>
+                                        <Field 
+                                            name="description" 
+                                            component="textarea" 
+                                            placeholder="Опишите здесь суть задачи" 
+                                            rows="3"/>
+                                    </Col>
                                 </Row>
                                 <Row>
                                     <Col xs={col1} md={col1}><label>Дата окончания</label></Col>
@@ -114,10 +133,15 @@ const AddTodo = () => {
                                 <Row>
                                     <Col xs={col1} md={col1}><label>Приоритет</label></Col>
                                     <Col xs={col2} md={col2}>
-                                    <Field name="priority" component="select">
+                                    <Field 
+                                        validate={ (value, values) => {
+                                            if (!values.priority) return "Выберите приоритет задачи";
+                                        }}
+                                        name="priority" 
+                                        component="select">
                                         <option />
                                         <option value="низкий">низкий</option>
-                                        <option value="средний" selected>средний</option>
+                                        <option value="средний">средний</option>
                                         <option value="высокий">высокий</option>
                                     </Field>
                                     </Col>
@@ -125,8 +149,12 @@ const AddTodo = () => {
                                 <Row>
                                     <Col xs={col1} md={col1}><label>Статус</label></Col>
                                     <Col xs={col2} md={col2}>
-                                    <Field name="status" component="select">
-                                        <option />
+                                    <Field 
+                                        // validate={ (value, values) => {
+                                        //     if (!values.status) return "Выберите статус задачи";
+                                        // }}
+                                        name="status" 
+                                        component="select">
                                         <option value="к выполнению">к выполнению</option>
                                         <option value="выполняется">выполняется</option>
                                         <option value="выполнена">выполнена</option>
@@ -157,12 +185,20 @@ const AddTodo = () => {
                                     </Col>
                                 </Row>
                                 <div class="modal-footer">
+                                    <button
+                                        type="button"
+                                        onClick={form.reset}
+                                        disabled={submitting || pristine}
+                                        >
+                                        Сбросить
+                                        </button>
                                     <Button 
                                         variant="secondary" 
                                         onClick={ () => dispatch(setDialogVisibilityAction(false))}>
                                         Закрыть
                                     </Button>
                                     <Button 
+                                        disabled={submitting || pristine}
                                         type="submit" variant="primary">
                                         Сохранить
                                     </Button>
@@ -176,10 +212,4 @@ const AddTodo = () => {
     )
 }
 
-// const mapStateToProps = state => ({
-//   visibility: state.visibilityDialog,
-//   initialValues: state.todos.find( t => t.id === state.currentEditing )
-// })
-    
-// export default connect(mapStateToProps)(AddTodo)
 export default AddTodo;
