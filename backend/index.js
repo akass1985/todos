@@ -78,46 +78,98 @@ const saveTodo = (ws, item, userId) => {
 const login = (ws, credentials) => {
   console.log('RECEIVED LOGIN MESSAGE, filter=%s', JSON.stringify(credentials));
   conn.query(
-    'SELECT id, login, password FROM users WHERE login=? AND password=?', 
-    [credentials.login, credentials.password], 
+    'SELECT id, login, password FROM users WHERE login=?', 
+    [credentials.login], 
     (err, rows) => {
-      if (err) throw err;
+      try {
+        if (err) throw err;
 
-      if (rows.length){
-        console.log("Rows.length=%s", rows.length);
-        const match = rows.find( user => user.login === credentials.login && user.password === credentials.password);
-        if (match){
-          console.log("MATCH: %s", JSON.stringify(match));
-          const answer = JSON.stringify({
-            type: 'LOGIN',
-            result: 'SUCCESS',
-            userId: match.id
-          });
-          ws.send(answer);
-          console.log('SENT: %s', answer);
+        if (rows.length){
+          console.log("LOGIN \"%s\" IS EXIST", credentials.login);
+          const match = rows.find( user => user.password === credentials.password);
+          if (match){
+            console.log("FOUND PASSWORD FOR \"%s\" IS EXIST", credentials.login);
+            const answer = JSON.stringify({
+              type: 'LOGIN',
+              result: 'SUCCESS',
+              userId: match.id
+            });
+            ws.send(answer);
+            console.log('SENT: %s', answer);
+          } else {
+            console.log("DON'T MATCH");
+            const answer = JSON.stringify({
+              type: 'LOGIN',
+              result: 'FAILURE',
+              error: "Неправильный пароль"
+            });
+            ws.send(answer);
+            console.log('SENT: %s', answer);
+          }
         } else {
-          console.log("DON'T MATCH");
+          console.log("LOGIN \"%s\" NOT EXIST", credentials.login);
           const answer = JSON.stringify({
             type: 'LOGIN',
             result: 'FAILURE',
-            error: "Причина 1"
+            error: "Пользователя с таким логином не существует"
           });
           ws.send(answer);
           console.log('SENT: %s', answer);
         }
-      } else {
-        console.log("ROWS.LENGTH IS %s", rows.length)
-        const answer = JSON.stringify({
-          type: 'LOGIN',
-          result: 'FAILURE',
-          error: "Причина 2"
-        });
-        ws.send(answer);
-        console.log('SENT: %s', answer);
+      } catch(e){
+        
       }
     }
   );
 }
+
+// const login = (ws, credentials) => {
+//   console.log('RECEIVED LOGIN MESSAGE, filter=%s', JSON.stringify(credentials));
+//   conn.query(
+//     'SELECT id, login, password FROM users WHERE login=? AND password=?', 
+//     [credentials.login, credentials.password], 
+//     (err, rows) => {
+//       try {
+//         if (err) throw err;
+
+//         if (rows.length){
+//           console.log("Rows.length=%s", rows.length);
+//           const match = rows.find( user => user.login === credentials.login && user.password === credentials.password);
+//           if (match){
+//             console.log("MATCH: %s", JSON.stringify(match));
+//             const answer = JSON.stringify({
+//               type: 'LOGIN',
+//               result: 'SUCCESS',
+//               userId: match.id
+//             });
+//             ws.send(answer);
+//             console.log('SENT: %s', answer);
+//           } else {
+//             console.log("DON'T MATCH");
+//             const answer = JSON.stringify({
+//               type: 'LOGIN',
+//               result: 'FAILURE',
+//               error: "Причина 1"
+//             });
+//             ws.send(answer);
+//             console.log('SENT: %s', answer);
+//           }
+//         } else {
+//           console.log("ROWS.LENGTH IS %s", rows.length)
+//           const answer = JSON.stringify({
+//             type: 'LOGIN',
+//             result: 'FAILURE',
+//             error: "Причина 2"
+//           });
+//           ws.send(answer);
+//           console.log('SENT: %s', answer);
+//         }
+//       } catch(e){
+
+//       }
+//     }
+//   );
+// }
 
 const wss = new WebSocket.Server({ port: 8888 });
 console.log('BACK IS STARTED!');

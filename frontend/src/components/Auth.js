@@ -6,9 +6,10 @@ import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Spinner from 'react-bootstrap/Spinner'
+import Alert from 'react-bootstrap/Alert'
 import { Form } from 'react-final-form'
 import { Field } from 'react-final-form-html5-validation'
-import { login } from '../actions'
+import { login, ActionTypes } from '../actions'
 import { selectAuth } from '../selectors'
 import { apiLogin } from '../api'
 
@@ -46,8 +47,7 @@ const Auth = () => {
                         <Col xs={col2} md={col2}>
                             <input 
                                 ref={node => (nodeLogin = node)}
-                                type="text"
-                                value="alexeykass" />
+                                type="text"/>
                         </Col>
                     </Row>
                     <Row className="show-grid">
@@ -57,10 +57,14 @@ const Auth = () => {
                         <Col xs={col2} md={col2}>
                             <input 
                                 ref={node => (nodePassword = node)}
-                                type="password"
-                                value="alexeykass" />
+                                type="password" />
                         </Col>
                     </Row>
+                    {!auth.userId && !auth.loading && auth.error && <Row>
+                        <Col>
+                            <Alert variant="danger">{auth.error}</Alert>
+                        </Col>
+                    </Row>}
                 </Container>
             </Modal.Body>
             <Modal.Footer>
@@ -75,11 +79,11 @@ const Auth = () => {
                     />
                     Проверка...
                 </Button>}
-                <Button 
+                {/* <Button 
                     onClick={ () => onSubmit() }
                     variant="secondary">
                 Close
-            </Button>
+            </Button> */}
             {!auth.loading && 
                 <Button 
                     onClick={ () => onSubmit() }
