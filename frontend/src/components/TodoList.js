@@ -67,7 +67,7 @@ const TodoList = () => {
           <Button
             variant="primary"
             onClick={ () => dispatch(setDialogVisibilityAction(true)) }>
-            Добавить задачу
+            Новая задача
           </Button>
         </Col>
       </Row>
