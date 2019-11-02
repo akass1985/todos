@@ -1,26 +1,41 @@
-import  { format, addWeeks, addMonths, isAfter, isBefore, isEqual }  from 'date-fns'
+import  { format, addWeeks, addMonths, isBefore, isSameDay, startOfDay }  from 'date-fns'
 import { VisibilityFilters } from '../actions'
 
 export const getVisibleTodos = (todos, filter) => {
+  const today = startOfDay(new Date());
+
+//   const due_date = new Date(todo.due_date);
+
+// return !isBefore(due_date, today) && isBefore(due_date, addMonths(today, 6)})
+
   switch (filter) {
     case VisibilityFilters.SHOW_ALL:
-      return [...todos].sort( (a,b) => isBefore(new Date(a.modified_date), new Date(b.modified_date)) ? -1 : 1 )
+        return [...todos].sort( (a,b) => isBefore(new Date(a.modified_date), new Date(b.modified_date)) ? -1 : 1 )
+
     case VisibilityFilters.SHOW_BY_ASSIGNED_USERS:
-      return [...todos].sort( (a, b) => a.assigned_user < b.assigned_user ? -1 : 1 )
+        return [...todos].sort( (a, b) => a.assigned_user < b.assigned_user ? -1 : 1 )
+
     case VisibilityFilters.SHOW_BY_DUE_DATE_ON_TODAY:
-        return todos.filter( todo => isEqual(new Date(todo.due_date), new Date()))
+        return todos.filter( todo => isSameDay(new Date(todo.due_date), today))
+
     case VisibilityFilters.SHOW_BY_DUE_DATE_ON_WEEK:
-      return todos.filter( todo => 
-        isAfter(new Date(todo.due_date), new Date()) && isBefore(new Date(), addWeeks(new Date(), 1))
-      )
+      return todos.filter( todo => {
+        const due_date = new Date(todo.due_date);
+        return !isBefore(due_date, today) && isBefore(due_date, addWeeks(today, 1));
+      })
+
     case VisibilityFilters.SHOW_BY_DUE_DATE_ON_MONTH:
-        return todos.filter( todo => 
-          isAfter(new Date(todo.due_date), new Date()) && isBefore(new Date(), addMonths(new Date(), 1))
-        )
+        return todos.filter( todo => {
+          const due_date = new Date(todo.due_date);
+          return !isBefore(due_date, today) && isBefore(due_date, addMonths(today, 1));
+        })
+
     case VisibilityFilters.SHOW_BY_DUE_DATE_ON_HALF_YEAR:
-        return todos.filter( todo => 
-          isAfter(new Date(todo.due_date), new Date()) && isBefore(new Date(), addMonths(new Date(), 6))
-        )
+        return todos.filter( todo => {
+          const due_date = new Date(todo.due_date);
+          return !isBefore(due_date, today) && isBefore(due_date, addMonths(today, 6));
+        })
+
     default:
       throw new Error('Unknown filter: ' + filter)
   }
