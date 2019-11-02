@@ -71,6 +71,8 @@ export const currentEditing = (state = null, action) => {
   switch (action.type){
         case ActionTypes.EDIT_TODO:
             return action.id
+        case ActionTypes.SET_DIALOG_VISIBILITY:
+            return null
         default:
           return state
     }
