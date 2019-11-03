@@ -39,20 +39,18 @@ var sha512 = function(password, salt){
     };
 };
 
-function saltHashPassword(userpassword) {
-    var salt = genRandomString(16); /** Gives us salt of length 16 */
-    passwordData = sha512(userpassword, salt);
-    console.log('UserPassword = '+userpassword);
-    console.log('Passwordhash = '+passwordData.passwordHash);
-    console.log('nSalt = '+passwordData.salt);
-}
-
-// saltHashPassword('MYPASSWORD');
-// saltHashPassword('MYPASSWORD');
+// function saltHashPassword(userpassword) {
+//     var salt = genRandomString(16); /** Gives us salt of length 16 */
+//     passwordData = sha512(userpassword, salt);
+//     console.log('UserPassword = '+userpassword);
+//     console.log('Passwordhash = '+passwordData.passwordHash);
+//     console.log('nSalt = '+passwordData.salt);
+// }
 
 const sendTodos = (ws, userId) => {
   console.log('RECEIVED FETCH_TODOS MESSAGE, userId=%s', userId);
-  conn.query('SELECT * FROM todos WHERE owner=? OR assigned_user=?', [userId, userId], (err, rows) => {
+  // conn.query('SELECT * FROM todos WHERE owner=? OR assigned_user=?', [userId, userId], (err, rows) => {
+  conn.query('SELECT * FROM todos', (err, rows) => {
     if (err) throw err;
     const answer = JSON.stringify({
       type: "FETCH_TODOS",
@@ -66,7 +64,7 @@ const sendTodos = (ws, userId) => {
 
 const sendUsers = (ws, filter) => {
   console.log('RECEIVED FETCH_USERS MESSAGE, filter=%s', filter);
-  conn.query('SELECT * FROM users', (err, rows) => {
+  conn.query('SELECT id, firstname, middlename, lastname, chief FROM users', (err, rows) => {
     if (err) throw err;
     const answer = JSON.stringify({
       type: "FETCH_USERS",

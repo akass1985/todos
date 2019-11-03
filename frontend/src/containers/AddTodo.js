@@ -15,7 +15,9 @@ import {
     selectDialogInitialValues, 
     selectCurrentEditing, 
     selectUsers, 
-    selectUserId
+    selectUserId,
+    selectEmployees,
+    selectChiefId
 } from '../selectors'
 import { fetchUsers } from '../actions'
 
@@ -34,6 +36,8 @@ const AddTodo = () => {
     const currentEditing = useSelector(selectCurrentEditing);
     const users = useSelector(selectUsers);
     const userId = useSelector(selectUserId);
+    const chiefId = useSelector(selectChiefId);
+    const employees = useSelector(selectEmployees);
 
     let values
   
@@ -80,7 +84,9 @@ const AddTodo = () => {
                                             validate={validateText}>
                                             {({ input, meta }) => (
                                             <div>
-                                                <input {...input} type="text" placeholder="Название задачи" />
+                                                <input {...input} 
+                                                disabled={currentEditing && chiefId && (chiefId === dialogInitialValues.owner)}
+                                                type="text" placeholder="Название задачи" />
                                                 {meta.validating && <Spinner />}
                                             </div>
                                             )}
@@ -93,6 +99,7 @@ const AddTodo = () => {
                                     </Col>
                                     <Col xs={col2} md={col2}>
                                         <Field 
+                                            disabled={currentEditing && chiefId && (chiefId === dialogInitialValues.owner)}
                                             name="description" 
                                             component="textarea" 
                                             placeholder="Опишите здесь суть задачи" 
@@ -109,7 +116,11 @@ const AddTodo = () => {
                                         validate={validateDates}>
                                         {({ input, meta }) => (
                                         <div>
-                                            <input {...input} type="date" placeholder="Дата окончания" />
+                                            <input 
+                                            {...input} 
+                                            disabled={currentEditing && chiefId && (chiefId === dialogInitialValues.owner)}
+                                            type="date" 
+                                            placeholder="Дата окончания" />
                                             {meta.validating && <Spinner />}
                                         </div>
                                     )}
@@ -120,6 +131,7 @@ const AddTodo = () => {
                                     <Col xs={col1} md={col1}><label>Дата создания</label></Col>
                                     <Col xs={col2} md={col2}>
                                     <Field
+                                        disabled={currentEditing && chiefId && (chiefId === dialogInitialValues.owner)}
                                         name="created_date"
                                         component="input"
                                         type="date"
@@ -134,6 +146,7 @@ const AddTodo = () => {
                                     <Col xs={col1} md={col1}><label>Приоритет</label></Col>
                                     <Col xs={col2} md={col2}>
                                     <Field 
+                                        disabled={currentEditing && chiefId && (chiefId === dialogInitialValues.owner)}
                                         validate={ (value, values) => {
                                             if (!values.priority) return "Выберите приоритет задачи";
                                         }}
@@ -165,8 +178,12 @@ const AddTodo = () => {
                                 <Row>
                                     <Col xs={col1} md={col1}><label>Создатель</label></Col>
                                     <Col xs={col2} md={col2}>
-                                    <Field name="owner" component="select">
-                                        <option />
+                                    <Field 
+                                        disabled={currentEditing && chiefId && (chiefId === dialogInitialValues.owner)}
+                                        disabled
+                                        name="owner" 
+                                        component="select">
+                                        {/* <option /> */}
                                         {users.map( user => <option value={user.id}>
                                             {user.firstname} {user.middlename} {user.lastname}
                                         </option>)}
@@ -176,9 +193,12 @@ const AddTodo = () => {
                                 <Row>
                                     <Col xs={col1} md={col1}><label>Ответственный</label></Col>
                                     <Col xs={col2} md={col2}>
-                                    <Field name="assigned_user" component="select">
-                                        <option />
-                                        {users.map( user => <option value={user.id}>
+                                    <Field 
+                                        disabled={currentEditing && chiefId && (chiefId === dialogInitialValues.owner)}
+                                        name="assigned_user" 
+                                        component="select">
+                                        {/* <option /> */}
+                                        {employees.map( user => <option value={user.id}>
                                             {user.firstname} {user.middlename} {user.lastname}
                                         </option>)}
                                     </Field>

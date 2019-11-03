@@ -91,3 +91,25 @@ export const selectUsers = state => state.users.data || [];
 export const selectAuth = state => state.auth || null;
 
 export const selectUserId = state => state.auth.userId || null;
+
+export const selectChiefId = state => {
+  // alert('USERS and UserId='+(state.users.date && state.auth.userId) ? "true" : "false");
+  if (state.users.data && state.auth.userId){
+    const me = state.users.data.find( user => user.id === state.auth.userId );
+    // alert(JSON.stringify(me));
+    // alert('ME='+JSON.stringify(me));
+    // alert('me.chief='+me.chief);
+    return me ? me.chief : null;
+  } else {
+    return null;
+  }
+}
+
+export const selectEmployees = state => {
+  if (state.auth.userId && state.users.data) {
+    return state.users.data.filter(  user => 
+      (user.chief === state.auth.userId) || (user.id === state.auth.userId ) ) 
+  } else {
+    return [];
+  }
+}
