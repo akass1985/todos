@@ -12,7 +12,7 @@ import NavDropdown from 'react-bootstrap/NavDropdown'
 import Alert from 'react-bootstrap/Alert'
 import FilterLink from '../containers/FilterLink'
 import { VisibilityFilters, setDialogVisibilityAction, fetchTodo, editTodo, ActionTypes } from '../actions'
-import { selectTodos, selectDialogVisibility, selectInfoMessage, selectVisibilityFilter, selectUserId } from '../selectors'
+import { selectTodos, selectDialogVisibility, selectInfoMessage, selectVisibilityFilter, selectUserId, selectUsers } from '../selectors'
 import Spinner from 'react-bootstrap/Spinner'
 import { todos } from '../reducers';
 import { setVisibilityFilter } from '../actions'
@@ -26,11 +26,18 @@ const TodoList = () => {
   //   dispatch(fetchTodo(userId));
   // }, []);
 
-  const userId = useSelector(selectUserId);
+  const getUserInitials = (users, userId) => {
+    const user = users.find( user => user.id === userId);
+    return user 
+      ? user.lastname+" "+user.firstname+" "+user.middlename 
+      : "";
+  }
 
+  const userId = useSelector(selectUserId);
+  const users = useSelector(selectUsers);
   const todos = useSelector(selectTodos);
   
-  // const dialogVisibility =  useSelector(selectDialogVisibility);
+  const dialogVisibility =  useSelector(selectDialogVisibility);
   const infoMessage = useSelector(selectInfoMessage);
 
   if (infoMessage){
@@ -61,7 +68,7 @@ const TodoList = () => {
     <Container fluid>
       <Row>
         <Col className="d-flex align-items-center justify-content-center">
-          <h1>Задачи</h1>
+          <h1>{getUserInitials(users, userId)}</h1>
         </Col>
         <Col className="d-flex align-items-center justify-content-center">
           <Button

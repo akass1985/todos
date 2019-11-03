@@ -35,8 +35,8 @@ socket.onmessage = (message) => {
   const obj = JSON.parse(message.data);
   if (obj.type){
     switch (obj.type){
-      case "FETCH_TODOS": 
-        store.dispatch(fetchTodoSuccess(obj.data)); break;
+      case "FETCH_TODOS": {
+        store.dispatch(fetchTodoSuccess(obj.data)); };break;
       case "FETCH_USERS": 
         store.dispatch(fetchUsersSuccess(obj.data)); break
       case "LOGIN": {
@@ -55,6 +55,9 @@ socket.onmessage = (message) => {
           } else {
             store.dispatch(saveTodoFailure(obj.data));
           }}; break;
+      case "UPDATE_NOTIFICATION":{
+        store.dispatch(fetchTodoSuccess(obj.data));
+      }
     }
   }
 }

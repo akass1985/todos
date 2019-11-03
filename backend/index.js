@@ -3,6 +3,8 @@ const mysql = require('mysql')
 'use strict';
 var crypto = require('crypto');
 
+const clients = [];
+
 const conn = mysql.createConnection({
     charset: "utf8_general_ci",
     host: 'localhost',
@@ -46,6 +48,21 @@ var sha512 = function(password, salt){
 //     console.log('Passwordhash = '+passwordData.passwordHash);
 //     console.log('nSalt = '+passwordData.salt);
 // }
+
+const updateNotification = function(websocketes) {
+  console.log('NOTIFICATIONS ON UPDATE');  
+  conn.query('SELECT * FROM todos', (err, rows) => {
+    if (err) throw err;
+    const answer = JSON.stringify({
+      type: "UPDATE_NOTIFICATION",
+      data: rows
+    });
+    for (var i = 0; i < websocketes.length; i++){
+      websocketes[i].send(answer);
+      console.log('SENT: %s', answer);
+    }
+  });
+}
 
 const sendTodos = (ws, userId) => {
   console.log('RECEIVED FETCH_TODOS MESSAGE, userId=%s', userId);
@@ -94,6 +111,7 @@ const saveTodo = (ws, item, userId) => {
           userId: userId
         });
         ws.send(answer);
+        updateNotification(clients);
         console.log("SAVE RESULT IS %s", res.affectedRows > 0 ? 'OK' : 'FAIL');
       })
   } else {
@@ -110,6 +128,7 @@ const saveTodo = (ws, item, userId) => {
           userId: userId
         });
         ws.send(answer);
+        updateNotification(clients);
         console.log("SAVE RESULT IS %s", res.affectedRows > 0 ? 'OK' : 'FAIL');
       })
   }
@@ -167,65 +186,20 @@ const login = (ws, credentials) => {
   );
 }
 
-// const login = (ws, credentials) => {
-//   console.log('RECEIVED LOGIN MESSAGE, filter=%s', JSON.stringify(credentials));
-//   conn.query(
-//     'SELECT id, login, password FROM users WHERE login=? AND password=?', 
-//     [credentials.login, credentials.password], 
-//     (err, rows) => {
-//       try {
-//         if (err) throw err;
-
-//         if (rows.length){
-//           console.log("Rows.length=%s", rows.length);
-//           const match = rows.find( user => user.login === credentials.login && user.password === credentials.password);
-//           if (match){
-//             console.log("MATCH: %s", JSON.stringify(match));
-//             const answer = JSON.stringify({
-//               type: 'LOGIN',
-//               result: 'SUCCESS',
-//               userId: match.id
-//             });
-//             ws.send(answer);
-//             console.log('SENT: %s', answer);
-//           } else {
-//             console.log("DON'T MATCH");
-//             const answer = JSON.stringify({
-//               type: 'LOGIN',
-//               result: 'FAILURE',
-//               error: "Причина 1"
-//             });
-//             ws.send(answer);
-//             console.log('SENT: %s', answer);
-//           }
-//         } else {
-//           console.log("ROWS.LENGTH IS %s", rows.length)
-//           const answer = JSON.stringify({
-//             type: 'LOGIN',
-//             result: 'FAILURE',
-//             error: "Причина 2"
-//           });
-//           ws.send(answer);
-//           console.log('SENT: %s', answer);
-//         }
-//       } catch(e){
-
-//       }
-//     }
-//   );
-// }
-
 const wss = new WebSocket.Server({ port: 8888 });
 console.log('BACK IS STARTED!');
-
 wss.on('connection', (ws) => {
+  clients.push(ws);
+  console.log('CONNECTED: %s', clients.length);
   ws.on('message', (message) => {
     var obj = JSON.parse(message);
     // console.log("DHFL %s", message);
     if (obj.type){
       switch (obj.type){
-        case "FETCH_TODO": sendTodos(ws, obj.userId); break;
-        case "SAVE_TODO": saveTodo(ws, obj.item, obj.userId); break;
+        case "FETCH_TODO":
+          sendTodos(ws, obj.userId); break;
+        case "SAVE_TODO":
+          saveTodo(ws, obj.item, obj.userId); break;
         case "FETCH_USERS": sendUsers(ws, obj.filter); break;
         case "LOGIN": login(ws, obj.credentials); break;
         default:
