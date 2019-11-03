@@ -1,5 +1,8 @@
 const WebSocket = require('ws');
 const mysql = require('mysql')
+'use strict';
+var crypto = require('crypto');
+
 const conn = mysql.createConnection({
     charset: "utf8_general_ci",
     host: 'localhost',
@@ -7,6 +10,45 @@ const conn = mysql.createConnection({
     password: 'root',
     database: 'example'
 });
+
+
+/**
+ * generates random string of characters i.e salt
+ * @function
+ * @param {number} length - Length of the random string.
+ */
+var genRandomString = function(length){
+    return crypto.randomBytes(Math.ceil(length/2))
+            .toString('hex') /** convert to hexadecimal format */
+            .slice(0,length);   /** return required number of characters */
+};
+
+/**
+ * hash password with sha512.
+ * @function
+ * @param {string} password - List of required fields.
+ * @param {string} salt - Data to be validated.
+ */
+var sha512 = function(password, salt){
+    var hash = crypto.createHmac('sha512', salt) /** Hashing algorithm sha512 */
+    hash.update(password);
+    var value = hash.digest('hex');
+    return {
+        salt:salt,
+        passwordHash:value
+    };
+};
+
+function saltHashPassword(userpassword) {
+    var salt = genRandomString(16); /** Gives us salt of length 16 */
+    passwordData = sha512(userpassword, salt);
+    console.log('UserPassword = '+userpassword);
+    console.log('Passwordhash = '+passwordData.passwordHash);
+    console.log('nSalt = '+passwordData.salt);
+}
+
+// saltHashPassword('MYPASSWORD');
+// saltHashPassword('MYPASSWORD');
 
 const sendTodos = (ws, userId) => {
   console.log('RECEIVED FETCH_TODOS MESSAGE, userId=%s', userId);
@@ -78,7 +120,7 @@ const saveTodo = (ws, item, userId) => {
 const login = (ws, credentials) => {
   console.log('RECEIVED LOGIN MESSAGE, filter=%s', JSON.stringify(credentials));
   conn.query(
-    'SELECT id, login, password FROM users WHERE login=?', 
+    'SELECT id, login, password, salt FROM users WHERE login=?', 
     [credentials.login], 
     (err, rows) => {
       try {
@@ -86,7 +128,11 @@ const login = (ws, credentials) => {
 
         if (rows.length){
           console.log("LOGIN \"%s\" IS EXIST", credentials.login);
-          const match = rows.find( user => user.password === credentials.password);
+          const match = rows.find( user => {
+            const passwordData = sha512(credentials.password, user.salt);
+            console.log('HASH WITH GET PASSWORD IS %s', passwordData.passwordHash);
+            return user.password === passwordData.passwordHash;
+          });
           if (match){
             console.log("FOUND PASSWORD FOR \"%s\" IS EXIST", credentials.login);
             const answer = JSON.stringify({
