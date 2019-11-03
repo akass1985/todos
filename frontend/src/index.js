@@ -32,6 +32,7 @@ socket.onopen = (e) => {
 }
 
 socket.onmessage = (message) => {
+  // alert(message.data);
   const obj = JSON.parse(message.data);
   if (obj.type){
     switch (obj.type){

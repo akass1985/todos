@@ -52,10 +52,12 @@ export const getVisibleTodos = (todos, users, filter) => {
 }
 
 export const selectTodos = state => getVisibleTodos(
+
   state.todos.data || [],
   state.users.data || [],
   selectVisibilityFilter(state)
 )
+
 
 export const selectCurrentUserId = state => state.currentUserId || 1;
 

@@ -135,7 +135,7 @@ const saveTodo = (ws, item, userId) => {
 }
 
 const login = (ws, credentials) => {
-  console.log('RECEIVED LOGIN MESSAGE, filter=%s', JSON.stringify(credentials));
+  console.log('RECEIVED LOGIN MESSAGE, credentials=%s', JSON.stringify(credentials));
   conn.query(
     'SELECT id, login, password, salt FROM users WHERE login=?', 
     [credentials.login], 
@@ -193,7 +193,6 @@ wss.on('connection', (ws) => {
   console.log('CONNECTED: %s', clients.length);
   ws.on('message', (message) => {
     var obj = JSON.parse(message);
-    // console.log("DHFL %s", message);
     if (obj.type){
       switch (obj.type){
         case "FETCH_TODO":

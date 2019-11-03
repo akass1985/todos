@@ -1,3 +1,6 @@
+import WebSocketAsPromised from 'websocket-as-promised'
+import { ActionTypes, loginSuccessful, fetchTodo, loginFailure, fetchUsers } from '../actions';
+
 export const socket = new WebSocket("ws://localhost:8888/");
 
 export const apiFetchTodos = (message) => {
@@ -28,13 +31,41 @@ export const apiFetchUsers = (message) => {
   }
 }
 
-export const apiLogin = (message) => {
-  if(socket.readyState === WebSocket.OPEN) {
-    socket.send(JSON.stringify({
-      type: message.type,
-      credentials: message.credentials
-    }))
-  }
+// export const apiLogin = (message) => {
+//   if(socket.readyState === WebSocket.OPEN) {
+//     socket.send(JSON.stringify({
+//       type: message.type,
+//       credentials: message.credentials
+//     }));
+//   }
+// }
+
+export const apiLogin = (values, dispatch) => {
+  const wsp = new WebSocketAsPromised("ws://localhost:8888/");
+
+  wsp.open()
+  .then( 
+    () => wsp.send(JSON.stringify({ type: ActionTypes.LOGIN, credentials: values })), 
+    () => alert("FAIL") )
+  .then( 
+    () => wsp.onMessage.addListener(message => {
+      const obj = JSON.parse(message);
+      if (obj.result === "OK"){
+        dispatch(loginSuccessful(obj.userId));
+        wsp.close();
+        // dispatch(fetchUsers());
+        // dispatch(fetchTodo());
+
+      } else {
+        dispatch(loginFailure(message.error));
+      }
+    },
+    () => alert("X"))
+  )
+  // .then( () => wsp.close() )
+  .catch(
+    (e) => alert(e)
+  );
 }
 
 export default apiFetchTodos;

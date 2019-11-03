@@ -22,8 +22,10 @@ const TodoList = () => {
 
   const dispatch = useDispatch();
 
+
   // useEffect( (userId) => {
   //   dispatch(fetchTodo(userId));
+
   // }, []);
 
   const getUserInitials = (users, userId) => {
@@ -39,6 +41,11 @@ const TodoList = () => {
   
   const dialogVisibility =  useSelector(selectDialogVisibility);
   const infoMessage = useSelector(selectInfoMessage);
+  const isAuth = useSelector(selectAuth);
+
+  // if (isAuth){
+  //   dispatch(fetchTodo());
+  // }
 
   if (infoMessage){
     return (
