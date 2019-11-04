@@ -737,7 +737,19 @@ describe('Селекторы', function() {
     });
   });
 
-  //TODO selectInfoMessage
+  describe('selectInfoMessage', function() {
+    it('Когда задан', ()=> {
+      const state = {
+        infoMessage: "Ошибочка вышла"
+      };
+      expect(selectors.selectInfoMessage(state)).toEqual("Ошибочка вышла");
+    });
+    it('Когда не задан', ()=> {
+      const state = {
+      };
+      expect(selectors.selectCurrentEditing(state)).toEqual(null);
+    });
+  });
 
   //TODO selectVisibilityFilter
 

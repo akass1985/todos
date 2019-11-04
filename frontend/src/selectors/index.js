@@ -86,7 +86,7 @@ export const selectDialogInitialValues = state => {
 
 export const selectCurrentEditing = state => state.currentEditing || null
 
-export const selectInfoMessage = state => state.infoMessage
+export const selectInfoMessage = state => state.infoMessage || null;
 
 export const selectVisibilityFilter = state => state.visibilityFilter || VisibilityFilters.SHOW_ALL
 
