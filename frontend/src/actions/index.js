@@ -1,5 +1,4 @@
 import apiFetchTodos, { apiSaveTodo, apiFetchUsers, apiLogin } from '../api'
-import { selectCurrentUserId } from '../selectors'
 
 export const ActionTypes = {
   SAVE_TODO: "SAVE_TODO",
@@ -46,7 +45,7 @@ export const loginFailure = error => ({
   type: ActionTypes.LOGIN_FAILURE,
   error
 })
-// TODOS
+// T O D O S
 export const fetchTodo = userId => (dispatch, getState) => {
   if (userId != null) {
     apiFetchTodos({

@@ -147,7 +147,7 @@ const login = (ws, credentials) => {
               type: 'LOGIN',
               result: 'SUCCESS',
               userId: match.id
-            });\
+            });
             ws.send(answer);
             console.log('SENT: %s', answer);
           } else {

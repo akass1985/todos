@@ -46,8 +46,14 @@ export const getVisibleTodos = (todos, users, filter) => {
           return !isBefore(due_date, today) && isBefore(due_date, addMonths(today, 6));
         })
 
-    default:
-      throw new Error('Unknown filter: ' + filter)
+    default:{
+      try {
+        throw new Error('Unknown filter: ' + filter);
+        return [];
+      } catch (e){
+        return [];
+      }
+    }
   }
 }
 
@@ -57,12 +63,10 @@ export const selectTodos = state => getVisibleTodos(
   selectVisibilityFilter(state)
 )
 
-export const selectCurrentUserId = state => state.currentUserId || 1;
-
-export const selectDialogVisibility = state => state.dialogVisibility
+export const selectDialogVisibility = state => state.dialogVisibility || false;
 
 export const selectDialogInitialValues = state => {
-  if(state.currentEditing){
+  if(selectCurrentEditing(state)){
     const currentTodo = state.todos.data.find( t => t.id === state.currentEditing);
     return {...currentTodo,
       due_date: format(new Date(currentTodo.due_date), 'yyyy-MM-dd'),
@@ -74,27 +78,29 @@ export const selectDialogInitialValues = state => {
       created_date: format(new Date(), 'yyyy-MM-dd'),
       modified_date: format(new Date(), 'yyyy-MM-dd'),
       status: "к выполнению",
-      owner: state.auth.userId,
-      assigned_user: state.auth.userId
+      owner: selectUserId(state),
+      assigned_user: selectUserId(state)
     }
   }
 }
 
 export const selectCurrentEditing = state => state.currentEditing || null
 
-export const selectInfoMessage = state => state.infoMessage
+export const selectInfoMessage = state => state.infoMessage || null;
 
 export const selectVisibilityFilter = state => state.visibilityFilter || VisibilityFilters.SHOW_ALL
 
-export const selectUsers = state => state.users.data || [];
+export const selectUsers = state => state.users ? (state.users.data || []) : [];
 
 export const selectAuth = state => state.auth || null;
 
-export const selectUserId = state => state.auth.userId || null;
+export const selectUserId = state => state.auth ? (state.auth.userId || null) : null;
 
 export const selectChiefId = state => {
-  if (state.users.data && state.auth.userId){
-    const me = state.users.data.find( user => user.id === state.auth.userId );
+  const users = selectUsers(state);
+  const userId = selectUserId(state);
+  if (userId && users){
+    const me = users.find( user => user.id === userId );
     return me ? me.chief : null;
   } else {
     return null;
@@ -102,9 +108,11 @@ export const selectChiefId = state => {
 }
 
 export const selectEmployees = state => {
-  if (state.auth.userId && state.users.data) {
-    return state.users.data.filter(  user => 
-      (user.chief === state.auth.userId) || (user.id === state.auth.userId ) ) 
+  const users = selectUsers(state);
+  const userId = selectUserId(state);
+  if (userId && users){
+    return users.filter(  user => 
+      (user.chief === userId) || (user.id === userId ) ) 
   } else {
     return [];
   }
