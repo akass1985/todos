@@ -66,7 +66,7 @@ export const selectTodos = state => getVisibleTodos(
 export const selectDialogVisibility = state => state.dialogVisibility || false;
 
 export const selectDialogInitialValues = state => {
-  if(state.currentEditing){
+  if(selectCurrentEditing(state)){
     const currentTodo = state.todos.data.find( t => t.id === state.currentEditing);
     return {...currentTodo,
       due_date: format(new Date(currentTodo.due_date), 'yyyy-MM-dd'),

@@ -580,8 +580,6 @@ describe('Селекторы', function() {
     });
   });
 
-  //TODO selectDialogInitialValues
-
   describe('selectDialogInitialValues', function() {
     it('Когда задано всё', ()=> {
       const state = {
@@ -725,7 +723,19 @@ describe('Селекторы', function() {
     });
   });
 
-  //TODO selectCurrentEditing
+  describe('selectCurrentEditing', function() {
+    it('Когда задан', ()=> {
+      const state = {
+        currentEditing: 1
+      };
+      expect(selectors.selectCurrentEditing(state)).toEqual(1);
+    });
+    it('Когда не задан', ()=> {
+      const state = {
+      };
+      expect(selectors.selectCurrentEditing(state)).toEqual(null);
+    });
+  });
 
   //TODO selectInfoMessage
 
