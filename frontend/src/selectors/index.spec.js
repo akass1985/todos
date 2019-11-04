@@ -1,5 +1,5 @@
 import * as selectors from './index'
-import { addDays, addMonths } from 'date-fns'
+import { addDays, addMonths, format } from 'date-fns'
 
 describe('Селекторы', function() {
 
@@ -566,8 +566,6 @@ describe('Селекторы', function() {
     
   });
 
-  //TODO selectDialogVisibility
-
   describe('selectDialogVisibility', function() {
     it('Когда задан', ()=> {
       const state = {
@@ -583,6 +581,149 @@ describe('Селекторы', function() {
   });
 
   //TODO selectDialogInitialValues
+
+  describe('selectDialogInitialValues', function() {
+    it('Когда задано всё', ()=> {
+      const state = {
+        todos: {
+          data: [
+            {
+              id: 1,
+              title: 'Тестовое задание',
+              description: 'Сделать менеджер задач',
+              due_date: '2019-12-30T19:00:00.000Z',
+              created_date: '2019-11-03T19:00:00.000Z',
+              modified_date: '2019-11-03T19:00:00.000Z',
+              priority: 'высокий',
+              status: 'выполнена',
+              owner: 1,
+              assigned_user: 1
+            },
+            {
+              id: 2,
+              title: 'Подготовиться к застолью',
+              description: 'Купить хлеба и макарон',
+              due_date: '2019-12-30T19:00:00.000Z',
+              created_date: '2019-11-03T19:00:00.000Z',
+              modified_date: '2019-11-03T19:00:00.000Z',
+              priority: 'низкий',
+              status: 'выполняется',
+              owner: 1,
+              assigned_user: 2
+            }
+          ]
+        },
+        auth: {
+          userId: 1
+        },
+        currentEditing: 2
+      };
+      const model = {
+        id: 2,
+        title: 'Подготовиться к застолью',
+        description: 'Купить хлеба и макарон',
+        due_date: format(new Date('2019-12-30T19:00:00.000Z'), 'yyyy-MM-dd'),
+        created_date: format(new Date('2019-11-03T19:00:00.000Z'), 'yyyy-MM-dd'),
+        modified_date: format(new Date('2019-11-03T19:00:00.000Z'), 'yyyy-MM-dd'),
+        priority: 'низкий',
+        status: 'выполняется',
+        owner: 1,
+        assigned_user: 2
+      };
+      expect(selectors.selectDialogInitialValues(state)).toEqual(model);
+    });
+
+    it('Когда не задан номер редактируемой задачи', ()=> {
+      const state = {
+        todos: {
+          data: [
+            {
+              id: 1,
+              title: 'Тестовое задание',
+              description: 'Сделать менеджер задач',
+              due_date: '2019-12-30T19:00:00.000Z',
+              created_date: '2019-11-03T19:00:00.000Z',
+              modified_date: '2019-11-03T19:00:00.000Z',
+              priority: 'высокий',
+              status: 'выполнена',
+              owner: 1,
+              assigned_user: 1
+            },
+            {
+              id: 2,
+              title: 'Подготовиться к застолью',
+              description: 'Купить хлеба и макарон',
+              due_date: '2019-12-30T19:00:00.000Z',
+              created_date: '2019-11-03T19:00:00.000Z',
+              modified_date: '2019-11-03T19:00:00.000Z',
+              priority: 'низкий',
+              status: 'выполняется',
+              owner: 1,
+              assigned_user: 2
+            }
+          ]
+        },
+        auth: {
+          userId: 1
+        },
+      };
+      const model = {
+        created_date: format(new Date(), 'yyyy-MM-dd'),
+        modified_date: format(new Date(), 'yyyy-MM-dd'),
+        status: "к выполнению",
+        owner: 1,
+        assigned_user: 1
+      };
+      expect(selectors.selectDialogInitialValues(state)).toEqual(model);
+    });
+
+    it('Когда не задан ID текущего пользователя', ()=> {
+      const state = {
+        todos: {
+          data: [
+            {
+              id: 1,
+              title: 'Тестовое задание',
+              description: 'Сделать менеджер задач',
+              due_date: '2019-12-30T19:00:00.000Z',
+              created_date: '2019-11-03T19:00:00.000Z',
+              modified_date: '2019-11-03T19:00:00.000Z',
+              priority: 'высокий',
+              status: 'выполнена',
+              owner: 1,
+              assigned_user: 1
+            },
+            {
+              id: 2,
+              title: 'Подготовиться к застолью',
+              description: 'Купить хлеба и макарон',
+              due_date: '2019-12-30T19:00:00.000Z',
+              created_date: '2019-11-03T19:00:00.000Z',
+              modified_date: '2019-11-03T19:00:00.000Z',
+              priority: 'низкий',
+              status: 'выполняется',
+              owner: 1,
+              assigned_user: 2
+            }
+          ]
+        },
+        currentEditing: 2
+      };
+      const model = {
+        id: 2,
+        title: 'Подготовиться к застолью',
+        description: 'Купить хлеба и макарон',
+        due_date: format(new Date('2019-12-30T19:00:00.000Z'), 'yyyy-MM-dd'),
+        created_date: format(new Date('2019-11-03T19:00:00.000Z'), 'yyyy-MM-dd'),
+        modified_date: format(new Date('2019-11-03T19:00:00.000Z'), 'yyyy-MM-dd'),
+        priority: 'низкий',
+        status: 'выполняется',
+        owner: 1,
+        assigned_user: 2
+      };
+      expect(selectors.selectDialogInitialValues(state)).toEqual(model);
+    });
+  });
 
   //TODO selectCurrentEditing
 

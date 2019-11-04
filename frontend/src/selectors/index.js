@@ -78,8 +78,8 @@ export const selectDialogInitialValues = state => {
       created_date: format(new Date(), 'yyyy-MM-dd'),
       modified_date: format(new Date(), 'yyyy-MM-dd'),
       status: "к выполнению",
-      owner: state.auth.userId,
-      assigned_user: state.auth.userId
+      owner: selectUserId(state),
+      assigned_user: selectUserId(state)
     }
   }
 }
