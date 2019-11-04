@@ -765,7 +765,52 @@ describe('Селекторы', function() {
     });
   });
 
-  //TODO selectUsers
+  describe('selectUsers', function() {
+    it('Когда задан', ()=> {
+      const state = {
+        users: {
+          data: [
+            {
+              id: 1,
+              firstname: 'Алексей',
+              middlename: 'Борисович',
+              lastname: 'Кассь',
+              chief: 0
+            },
+            {
+              id: 2,
+              firstname: 'Иван',
+              middlename: 'Иванович',
+              lastname: 'Иванов',
+              chief: 1
+            }
+          ]
+        },
+      };
+      const model = [
+        {
+          id: 1,
+          firstname: 'Алексей',
+          middlename: 'Борисович',
+          lastname: 'Кассь',
+          chief: 0
+        },
+        {
+          id: 2,
+          firstname: 'Иван',
+          middlename: 'Иванович',
+          lastname: 'Иванов',
+          chief: 1
+        }
+      ];
+      expect(selectors.selectUsers(state)).toEqual(model);
+    });
+    it('Когда не задан', ()=> {
+      const state = {
+      };
+      expect(selectors.selectUsers(state)).toEqual([]);
+    });
+  });
   
   //TODO selectAuth
   

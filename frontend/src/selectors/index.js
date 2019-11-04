@@ -90,7 +90,7 @@ export const selectInfoMessage = state => state.infoMessage || null;
 
 export const selectVisibilityFilter = state => state.visibilityFilter || VisibilityFilters.SHOW_ALL
 
-export const selectUsers = state => state.users.data || [];
+export const selectUsers = state => state.users ? (state.users.data || []) : [];
 
 export const selectAuth = state => state.auth || null;
 
