@@ -15,7 +15,7 @@ export const getVisibleTodos = (todos, users, filter) => {
           const u_b = users.find( user => user.id === b.assigned_user);
           if (u_a && u_b){
             if (u_a.lastname+u_a.firstname+u_a.middlename < u_b.lastname+u_b.firstname+u_b.middlename) {
-              return -11;
+              return -1;
             } else {
               return 1;
             }
@@ -73,7 +73,7 @@ export const selectDialogInitialValues = state => {
     return {
       created_date: format(new Date(), 'yyyy-MM-dd'),
       modified_date: format(new Date(), 'yyyy-MM-dd'),
-      status: 0,
+      status: "к выполнению",
       owner: state.auth.userId,
       assigned_user: state.auth.userId
     }
@@ -93,12 +93,8 @@ export const selectAuth = state => state.auth || null;
 export const selectUserId = state => state.auth.userId || null;
 
 export const selectChiefId = state => {
-  // alert('USERS and UserId='+(state.users.date && state.auth.userId) ? "true" : "false");
   if (state.users.data && state.auth.userId){
     const me = state.users.data.find( user => user.id === state.auth.userId );
-    // alert(JSON.stringify(me));
-    // alert('ME='+JSON.stringify(me));
-    // alert('me.chief='+me.chief);
     return me ? me.chief : null;
   } else {
     return null;

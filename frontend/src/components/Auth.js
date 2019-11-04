@@ -7,11 +7,8 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Spinner from 'react-bootstrap/Spinner'
 import Alert from 'react-bootstrap/Alert'
-import { Form } from 'react-final-form'
-import { Field } from 'react-final-form-html5-validation'
 import { login, ActionTypes } from '../actions'
 import { selectAuth } from '../selectors'
-import { apiLogin } from '../api'
 
 const Auth = () => {
 
@@ -79,11 +76,6 @@ const Auth = () => {
                     />
                     Проверка...
                 </Button>}
-                {/* <Button 
-                    onClick={ () => onSubmit() }
-                    variant="secondary">
-                Close
-            </Button> */}
             {!auth.loading && 
                 <Button 
                     onClick={ () => onSubmit() }

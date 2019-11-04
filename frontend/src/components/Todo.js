@@ -1,9 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { selectUsers } from '../selectors'
 import { format, isAfter } from 'date-fns'
-// import { ru } from 'date-fns/locale'
 
 const Todo = ({ onClick, completed, todo }) => {
 
@@ -20,18 +19,11 @@ const Todo = ({ onClick, completed, todo }) => {
     >
       <td style={{color: todo.status === "выполнена" ? "green" : ( isAfter(new Date(), new Date(todo.due_date)) ? "red" : "grey") }}>{todo.title}</td>
       <td>{todo.priority}</td>
-      {/* <td>{formatRelative(new Date(todo.due_date), new Date(), {locale: ru, weekStartsOn: 1 })}</td> */}
       <td>{format(new Date(todo.due_date), "dd-MM-yyyy")}</td>
       <td>{getAssignedUser(todo.assigned_user)}</td>
       <td>{todo.status}</td>
     </tr>
   );
-}
-
-Todo.propTypes = {
-  onClick: PropTypes.func.isRequired,
-  completed: PropTypes.bool.isRequired,
-  text: PropTypes.object.isRequired
 }
 
 export default Todo

@@ -71,7 +71,6 @@ socket.onclose = (event) => {
 };
 
 socket.onerror = (error) => {
-  // store.dispatch(fetchTodoFailure(error));
 };
 
 render(

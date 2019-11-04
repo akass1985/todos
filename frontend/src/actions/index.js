@@ -28,6 +28,42 @@ export const VisibilityFilters = {
   SHOW_BY_DUE_DATE_ON_HALF_YEAR: 'SHOW_BY_DUE_DATE_ON_HALF_YEAR',
   SHOW_BY_ASSIGNED_USERS: 'SHOW_BY_ASSIGNED_USERS'
 }
+
+// LOGIN
+export const login = (credentials) => (dispatch, getState) => {
+  apiLogin({
+    type: ActionTypes.LOGIN,
+    credentials: credentials
+  })
+}
+
+export const loginSuccessful = data => ({
+  type: ActionTypes.LOGIN_SUCCESSFUL,
+  data
+})
+
+export const loginFailure = error => ({
+  type: ActionTypes.LOGIN_FAILURE,
+  error
+})
+// TODOS
+export const fetchTodo = userId => (dispatch, getState) => {
+  if (userId != null) {
+    apiFetchTodos({
+      type: ActionTypes.FETCH_TODO, 
+      userId: userId});
+  }
+}
+
+export const fetchTodoSuccess = data => ({
+  type: ActionTypes.FETCH_TODO_SUCCESS,
+  data
+})
+
+export const fetchTodoFailure = error => ({
+  type: ActionTypes.FETCH_TODO_FAILURE,
+  error
+})
 // SAVE TODO
 export const saveTodo = (item, userId) => (dispatch, getState) => (
   apiSaveTodo({
@@ -51,7 +87,7 @@ export const editTodo = id => ({
   type: ActionTypes.EDIT_TODO,
   id
 })
-
+// DIALOG VISIBILITY
 export const setVisibilityFilter = filter => ({
   type: ActionTypes.SET_VISIBILITY_FILTER,
   filter
@@ -61,26 +97,7 @@ export const setDialogVisibilityAction = dialogVisibility => ({
     type: ActionTypes.SET_DIALOG_VISIBILITY,
     dialogVisibility
 })
-// FETCH TODO
-export const fetchTodo = userId => (dispatch, getState) => {
-  // const userId = selectCurrentUserId(getState());
-  if (userId != null) {
-    apiFetchTodos({
-      type: ActionTypes.FETCH_TODO, 
-      userId: userId});
-  }
-}
-
-export const fetchTodoSuccess = data => ({
-  type: ActionTypes.FETCH_TODO_SUCCESS,
-  data
-})
-
-export const fetchTodoFailure = error => ({
-  type: ActionTypes.FETCH_TODO_FAILURE,
-  error
-})
-
+// USERS
 export const fetchUsers = () => (dispatch, getState) => {
   apiFetchUsers({
     type: ActionTypes.FETCH_USERS, 
@@ -96,33 +113,8 @@ export const fetchUsersFailure = error => ({
   type: ActionTypes.FETCH_USERS_FAILURE,
   error
 })
-
+// ERRORS
 export const dbDisconnect = message => ({
   type: ActionTypes.DB_DISCONNECT,
   message
 })
-
-// export const login = credentials => ({
-//   type: ActionTypes.GET_AUTH,
-//   credentials
-// })
-
-export const loginSuccessful = data => ({
-  type: ActionTypes.LOGIN_SUCCESSFUL,
-  data
-})
-
-// export const loginSuccessful = userId => (dispatch, getState) => 
-//   dispatch(fetchTodo())
-
-export const loginFailure = error => ({
-  type: ActionTypes.LOGIN_FAILURE,
-  error
-})
-
-export const login = (credentials) => (dispatch, getState) => {
-    apiLogin({
-      type: ActionTypes.LOGIN,
-      credentials: credentials
-    })
-}

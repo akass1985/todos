@@ -19,17 +19,12 @@ import {
     selectEmployees,
     selectChiefId
 } from '../selectors'
-import { fetchUsers } from '../actions'
 
 const AddTodo = () => {
 
     const dispatch = useDispatch();
 
     const [col1, col2] = [5, 7];
-
-    // useEffect( () => {
-    //     dispatch(fetchUsers());
-    //   }, []);
 
     const dialogVisibility = useSelector(selectDialogVisibility);
     const dialogInitialValues = useSelector(selectDialogInitialValues);
@@ -163,9 +158,6 @@ const AddTodo = () => {
                                     <Col xs={col1} md={col1}><label>Статус</label></Col>
                                     <Col xs={col2} md={col2}>
                                     <Field 
-                                        // validate={ (value, values) => {
-                                        //     if (!values.status) return "Выберите статус задачи";
-                                        // }}
                                         name="status" 
                                         component="select">
                                         <option value="к выполнению">к выполнению</option>
@@ -183,7 +175,6 @@ const AddTodo = () => {
                                         disabled
                                         name="owner" 
                                         component="select">
-                                        {/* <option /> */}
                                         {users.map( user => <option value={user.id}>
                                             {user.firstname} {user.middlename} {user.lastname}
                                         </option>)}
@@ -197,7 +188,6 @@ const AddTodo = () => {
                                         disabled={currentEditing && chiefId && (chiefId === dialogInitialValues.owner)}
                                         name="assigned_user" 
                                         component="select">
-                                        {/* <option /> */}
                                         {employees.map( user => <option value={user.id}>
                                             {user.firstname} {user.middlename} {user.lastname}
                                         </option>)}

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-// import PropTypes from 'prop-types'
 import Todo from './Todo'
 import Nav from 'react-bootstrap/Nav'
 import Table from 'react-bootstrap/Table'
@@ -16,15 +15,10 @@ import { selectTodos, selectDialogVisibility, selectInfoMessage, selectVisibilit
 import Spinner from 'react-bootstrap/Spinner'
 import { todos } from '../reducers';
 import { setVisibilityFilter } from '../actions'
-import apiFetchTodos from '../api'
 
 const TodoList = () => {
 
   const dispatch = useDispatch();
-
-  // useEffect( (userId) => {
-  //   dispatch(fetchTodo(userId));
-  // }, []);
 
   const getUserInitials = (users, userId) => {
     const user = users.find( user => user.id === userId);
