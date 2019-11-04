@@ -43,6 +43,7 @@ const Auth = () => {
                         </Col>
                         <Col xs={col2} md={col2}>
                             <input 
+                                name="login"
                                 ref={node => (nodeLogin = node)}
                                 type="text"/>
                         </Col>
@@ -53,6 +54,7 @@ const Auth = () => {
                         </Col>
                         <Col xs={col2} md={col2}>
                             <input 
+                                name="password"
                                 ref={node => (nodePassword = node)}
                                 type="password" />
                         </Col>

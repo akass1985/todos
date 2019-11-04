@@ -46,8 +46,13 @@ export const getVisibleTodos = (todos, users, filter) => {
           return !isBefore(due_date, today) && isBefore(due_date, addMonths(today, 6));
         })
 
-    default:
-      throw new Error('Unknown filter: ' + filter)
+    default:{
+      try {
+        throw new Error('Unknown filter: ' + filter)
+      } catch (e){
+        return [];
+      }
+    }
   }
 }
 
