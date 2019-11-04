@@ -912,4 +912,82 @@ describe('Селекторы', function() {
   });
 
   //TODO selectEmployees
+
+  describe('selectEmployees', function() {
+    it('Когда всё задано', ()=> {
+      const state = {
+        users: {
+          data: [
+            {
+              id: 1,
+              firstname: 'Алексей',
+              middlename: 'Борисович',
+              lastname: 'Кассь',
+              chief: 0
+            },
+            {
+              id: 2,
+              firstname: 'Иван',
+              middlename: 'Иванович',
+              lastname: 'Иванов',
+              chief: 1
+            }
+          ]
+        },
+        auth: {
+          userId: 1
+        },
+      };
+      const model = [
+        {
+          id: 1,
+          firstname: 'Алексей',
+          middlename: 'Борисович',
+          lastname: 'Кассь',
+          chief: 0
+        },
+        {
+          id: 2,
+          firstname: 'Иван',
+          middlename: 'Иванович',
+          lastname: 'Иванов',
+          chief: 1
+        }
+      ];
+      expect(selectors.selectEmployees(state)).toEqual(model);
+    });
+
+    it('Когда не задан userId', ()=> {
+      const state = {
+        users: {
+          data: [
+            {
+              id: 1,
+              firstname: 'Алексей',
+              middlename: 'Борисович',
+              lastname: 'Кассь',
+              chief: 0
+            },
+            {
+              id: 2,
+              firstname: 'Иван',
+              middlename: 'Иванович',
+              lastname: 'Иванов',
+              chief: 1
+            }
+          ]
+        },
+      };
+      expect(selectors.selectEmployees(state)).toEqual([]);
+    });
+
+    it('Когда не задано users', ()=> {
+      const state = {
+        auth: {
+          userId: 1
+        },
+      };
+      expect(selectors.selectEmployees(state)).toEqual([]);
+    });
+  });
 });

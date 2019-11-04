@@ -108,9 +108,11 @@ export const selectChiefId = state => {
 }
 
 export const selectEmployees = state => {
-  if (selectUserId(state) && selectUsers(state)) {
-    return state.users.data.filter(  user => 
-      (user.chief === state.auth.userId) || (user.id === state.auth.userId ) ) 
+  const users = selectUsers(state);
+  const userId = selectUserId(state);
+  if (userId && users){
+    return users.filter(  user => 
+      (user.chief === userId) || (user.id === userId ) ) 
   } else {
     return [];
   }
