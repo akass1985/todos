@@ -5,6 +5,7 @@
   "devDependencies": {
     "@testing-library/cypress": "^5.0.2",
     "faker": "^4.1.0",
+    "mock-socket": "^9.0.2",
     "react-scripts": "^3.0.0"
   },
   "dependencies": {
