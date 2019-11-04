@@ -45,7 +45,7 @@ export const loginFailure = error => ({
   type: ActionTypes.LOGIN_FAILURE,
   error
 })
-// TODOS
+// T O D O S
 export const fetchTodo = userId => (dispatch, getState) => {
   if (userId != null) {
     apiFetchTodos({
