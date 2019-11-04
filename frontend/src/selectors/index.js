@@ -63,7 +63,7 @@ export const selectTodos = state => getVisibleTodos(
   selectVisibilityFilter(state)
 )
 
-export const selectDialogVisibility = state => state.dialogVisibility
+export const selectDialogVisibility = state => state.dialogVisibility || false;
 
 export const selectDialogInitialValues = state => {
   if(state.currentEditing){

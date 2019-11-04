@@ -566,9 +566,21 @@ describe('Селекторы', function() {
     
   });
 
-  // TODO selectCurrentId
-
   //TODO selectDialogVisibility
+
+  describe('selectDialogVisibility', function() {
+    it('Когда задан', ()=> {
+      const state = {
+        dialogVisibility: true
+      };
+      expect(selectors.selectDialogVisibility(state)).toEqual(true);
+    });
+    it('Когда не задан', ()=> {
+      const state = {
+      };
+      expect(selectors.selectDialogVisibility(state)).toEqual(false);
+    });
+  });
 
   //TODO selectDialogInitialValues
 
