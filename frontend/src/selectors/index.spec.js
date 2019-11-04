@@ -3,7 +3,7 @@ import { addDays, addMonths } from 'date-fns'
 
 describe('Селекторы', function() {
 
-  const state = {
+  const st = {
     todos: {
       loading: false,
       error: null,
@@ -391,7 +391,180 @@ describe('Селекторы', function() {
     });
   });
 
-  // TODO selectTodos
+  describe('selectTodos', function() {
+    it('Когда всё задано', ()=> {
+      const state = {
+        todos: {
+          data: [
+            {
+              id: 1,
+              title: 'Тестовое задание',
+              description: 'Сделать менеджер задач',
+              due_date: '2019-12-30T19:00:00.000Z',
+              created_date: '2019-11-03T19:00:00.000Z',
+              modified_date: '2019-11-03T19:00:00.000Z',
+              priority: 'высокий',
+              status: 'выполнена',
+              owner: 1,
+              assigned_user: 1
+            },
+            {
+              id: 2,
+              title: 'Подготовиться к застолью',
+              description: 'Купить хлеба и макарон',
+              due_date: '2019-12-30T19:00:00.000Z',
+              created_date: '2019-11-03T19:00:00.000Z',
+              modified_date: '2019-11-03T19:00:00.000Z',
+              priority: 'низкий',
+              status: 'выполняется',
+              owner: 1,
+              assigned_user: 2
+            }
+          ]
+        },
+        users: {
+          data: [
+            {
+              id: 1,
+              firstname: 'Алексей',
+              middlename: 'Борисович',
+              lastname: 'Кассь',
+              chief: 0
+            },
+            {
+              id: 2,
+              firstname: 'Иван',
+              middlename: 'Иванович',
+              lastname: 'Иванов',
+              chief: 1
+            }
+          ]
+        },
+        visibilityFilter: 'SHOW_ALL',
+      };
+      const model = [
+        {
+          id: 1,
+          title: 'Тестовое задание',
+          description: 'Сделать менеджер задач',
+          due_date: '2019-12-30T19:00:00.000Z',
+          created_date: '2019-11-03T19:00:00.000Z',
+          modified_date: '2019-11-03T19:00:00.000Z',
+          priority: 'высокий',
+          status: 'выполнена',
+          owner: 1,
+          assigned_user: 1
+        },
+        {
+          id: 2,
+          title: 'Подготовиться к застолью',
+          description: 'Купить хлеба и макарон',
+          due_date: '2019-12-30T19:00:00.000Z',
+          created_date: '2019-11-03T19:00:00.000Z',
+          modified_date: '2019-11-03T19:00:00.000Z',
+          priority: 'низкий',
+          status: 'выполняется',
+          owner: 1,
+          assigned_user: 2
+        }
+      ];
+      expect(selectors.selectTodos(state)).toEqual(model);
+    });
+
+    it('Когда не заданы задачи', ()=> {
+      const state = {
+        todos: {
+          data: [ ]
+        },
+        users: {
+          data: [
+            {
+              id: 1,
+              firstname: 'Алексей',
+              middlename: 'Борисович',
+              lastname: 'Кассь',
+              chief: 0
+            },
+            {
+              id: 2,
+              firstname: 'Иван',
+              middlename: 'Иванович',
+              lastname: 'Иванов',
+              chief: 1
+            }
+          ]
+        },
+        visibilityFilter: 'SHOW_ALL',
+      };
+      const model = [ ];
+      expect(selectors.selectTodos(state)).toEqual(model);
+    });
+
+    it('Когда не заданы пользователи и задан фильтр «По ответственным»', ()=> {
+      const state = {
+        todos: {
+          data: [
+            {
+              id: 1,
+              title: 'Тестовое задание',
+              description: 'Сделать менеджер задач',
+              due_date: '2019-12-30T19:00:00.000Z',
+              created_date: '2019-11-03T19:00:00.000Z',
+              modified_date: '2019-11-03T19:00:00.000Z',
+              priority: 'высокий',
+              status: 'выполнена',
+              owner: 1,
+              assigned_user: 1
+            },
+            {
+              id: 2,
+              title: 'Подготовиться к застолью',
+              description: 'Купить хлеба и макарон',
+              due_date: '2019-12-30T19:00:00.000Z',
+              created_date: '2019-11-03T19:00:00.000Z',
+              modified_date: '2019-11-03T19:00:00.000Z',
+              priority: 'низкий',
+              status: 'выполняется',
+              owner: 1,
+              assigned_user: 2
+            }
+          ]
+        },
+        users: {
+          data: [ ]
+        },
+        visibilityFilter: 'SHOW_BY_ASSIGNED_USERS',
+      };
+      const model = [
+        {
+          id: 1,
+          title: 'Тестовое задание',
+          description: 'Сделать менеджер задач',
+          due_date: '2019-12-30T19:00:00.000Z',
+          created_date: '2019-11-03T19:00:00.000Z',
+          modified_date: '2019-11-03T19:00:00.000Z',
+          priority: 'высокий',
+          status: 'выполнена',
+          owner: 1,
+          assigned_user: 1
+        },
+        {
+          id: 2,
+          title: 'Подготовиться к застолью',
+          description: 'Купить хлеба и макарон',
+          due_date: '2019-12-30T19:00:00.000Z',
+          created_date: '2019-11-03T19:00:00.000Z',
+          modified_date: '2019-11-03T19:00:00.000Z',
+          priority: 'низкий',
+          status: 'выполняется',
+          owner: 1,
+          assigned_user: 2
+        }
+      ];
+      expect(selectors.selectTodos(state)).toEqual(model);
+    });
+    
+  });
 
   // TODO selectCurrentId
 

@@ -48,7 +48,8 @@ export const getVisibleTodos = (todos, users, filter) => {
 
     default:{
       try {
-        throw new Error('Unknown filter: ' + filter)
+        throw new Error('Unknown filter: ' + filter);
+        return [];
       } catch (e){
         return [];
       }
