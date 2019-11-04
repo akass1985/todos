@@ -811,8 +811,22 @@ describe('Селекторы', function() {
       expect(selectors.selectUsers(state)).toEqual([]);
     });
   });
-  
-  //TODO selectAuth
+
+  describe('selectAuth', function() {
+    it('Когда задан', ()=> {
+      const state = {
+        auth: {
+          userId: 1
+        }
+      };
+      expect(selectors.selectAuth(state)).toEqual({ userId: 1});
+    });
+    it('Когда не задан', ()=> {
+      const state = {
+      };
+      expect(selectors.selectAuth(state)).toEqual(null);
+    });
+  });
   
   describe('selectUserId', function() {
     it('Когда задан', ()=> {
