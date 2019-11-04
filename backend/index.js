@@ -41,14 +41,6 @@ var sha512 = function(password, salt){
     };
 };
 
-// function saltHashPassword(userpassword) {
-//     var salt = genRandomString(16); /** Gives us salt of length 16 */
-//     passwordData = sha512(userpassword, salt);
-//     console.log('UserPassword = '+userpassword);
-//     console.log('Passwordhash = '+passwordData.passwordHash);
-//     console.log('nSalt = '+passwordData.salt);
-// }
-
 const updateNotification = function(websocketes) {
   console.log('NOTIFICATIONS ON UPDATE');  
   conn.query('SELECT * FROM todos', (err, rows) => {
@@ -66,7 +58,6 @@ const updateNotification = function(websocketes) {
 
 const sendTodos = (ws, userId) => {
   console.log('RECEIVED FETCH_TODOS MESSAGE, userId=%s', userId);
-  // conn.query('SELECT * FROM todos WHERE owner=? OR assigned_user=?', [userId, userId], (err, rows) => {
   conn.query('SELECT * FROM todos', (err, rows) => {
     if (err) throw err;
     const answer = JSON.stringify({
@@ -156,7 +147,7 @@ const login = (ws, credentials) => {
               type: 'LOGIN',
               result: 'SUCCESS',
               userId: match.id
-            });
+            });\
             ws.send(answer);
             console.log('SENT: %s', answer);
           } else {
@@ -193,7 +184,6 @@ wss.on('connection', (ws) => {
   console.log('CONNECTED: %s', clients.length);
   ws.on('message', (message) => {
     var obj = JSON.parse(message);
-    // console.log("DHFL %s", message);
     if (obj.type){
       switch (obj.type){
         case "FETCH_TODO":
