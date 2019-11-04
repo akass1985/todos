@@ -845,7 +845,71 @@ describe('Селекторы', function() {
     });
   });
 
-  //TODO selectChiefId
+  describe('selectChiefId', function() {
+    it('Когда всё задано', ()=> {
+      const state = {
+        users: {
+          loading: false,
+          error: null,
+          data: [
+            {
+              id: 1,
+              firstname: 'Алексей',
+              middlename: 'Борисович',
+              lastname: 'Кассь',
+              chief: 0
+            },
+            {
+              id: 2,
+              firstname: 'Иван',
+              middlename: 'Иванович',
+              lastname: 'Иванов',
+              chief: 1
+            }
+          ]
+        },
+        auth: {
+          userId: 1
+        },
+      };
+      expect(selectors.selectChiefId(state)).toEqual(0);
+    });
+
+    it('Когда не задан userId', ()=> {
+      const state = {
+        users: {
+          loading: false,
+          error: null,
+          data: [
+            {
+              id: 1,
+              firstname: 'Алексей',
+              middlename: 'Борисович',
+              lastname: 'Кассь',
+              chief: 0
+            },
+            {
+              id: 2,
+              firstname: 'Иван',
+              middlename: 'Иванович',
+              lastname: 'Иванов',
+              chief: 1
+            }
+          ]
+        },
+      };
+      expect(selectors.selectChiefId(state)).toEqual(null);
+    });
+
+    it('Когда не задано users', ()=> {
+      const state = {
+        auth: {
+          userId: 1
+        },
+      };
+      expect(selectors.selectChiefId(state)).toEqual(null);
+    });
+  });
 
   //TODO selectEmployees
 });

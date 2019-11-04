@@ -94,11 +94,13 @@ export const selectUsers = state => state.users ? (state.users.data || []) : [];
 
 export const selectAuth = state => state.auth || null;
 
-export const selectUserId = state => state.auth.userId || null;
+export const selectUserId = state => state.auth ? (state.auth.userId || null) : null;
 
 export const selectChiefId = state => {
-  if (state.users.data && state.auth.userId){
-    const me = state.users.data.find( user => user.id === state.auth.userId );
+  const users = selectUsers(state);
+  const userId = selectUserId(state);
+  if (userId && users){
+    const me = users.find( user => user.id === userId );
     return me ? me.chief : null;
   } else {
     return null;
@@ -106,7 +108,7 @@ export const selectChiefId = state => {
 }
 
 export const selectEmployees = state => {
-  if (state.auth.userId && state.users.data) {
+  if (selectUserId(state) && selectUsers(state)) {
     return state.users.data.filter(  user => 
       (user.chief === state.auth.userId) || (user.id === state.auth.userId ) ) 
   } else {
