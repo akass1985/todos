@@ -63,8 +63,6 @@ export const selectTodos = state => getVisibleTodos(
   selectVisibilityFilter(state)
 )
 
-export const selectCurrentUserId = state => state.currentUserId || 1;
-
 export const selectDialogVisibility = state => state.dialogVisibility
 
 export const selectDialogInitialValues = state => {
