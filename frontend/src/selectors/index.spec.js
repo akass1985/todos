@@ -911,8 +911,6 @@ describe('Селекторы', function() {
     });
   });
 
-  //TODO selectEmployees
-
   describe('selectEmployees', function() {
     it('Когда всё задано', ()=> {
       const state = {
