@@ -751,7 +751,19 @@ describe('Селекторы', function() {
     });
   });
 
-  //TODO selectVisibilityFilter
+  describe('selectVisibilityFilter', function() {
+    it('Когда задан', ()=> {
+      const state = {
+        visibilityFilter: 'SHOW_BY_ASSIGNED_USERS',
+      };
+      expect(selectors.selectVisibilityFilter(state)).toEqual("SHOW_BY_ASSIGNED_USERS");
+    });
+    it('Когда не задан', ()=> {
+      const state = {
+      };
+      expect(selectors.selectVisibilityFilter(state)).toEqual('SHOW_ALL');
+    });
+  });
 
   //TODO selectUsers
   
