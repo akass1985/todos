@@ -14,22 +14,22 @@ services:
         ports:
             - 3306:3306
     
-    # backend:
-    #     build:
-    #         context: ./backend
-    #     depends_on:
-    #         - db
-    #     ports:
-    #         - 8888:8888
+    backend:
+        build:
+            context: ./backend
+        depends_on:
+            - db
+        ports:
+            - 8888:8888
     
-    # frontend:
-    #     build:
-    #         context: ./frontend
-    #     depends_on:
-    #         - db
-    #         - backend
-    #     ports:
-    #         - 3000:3000
+    frontend:
+        build:
+            context: ./frontend
+        depends_on:
+            - db
+            - backend
+        ports:
+            - 3000:3000
 
     adminer:
         image: adminer
