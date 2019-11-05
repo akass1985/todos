@@ -14,8 +14,9 @@ exports.setup = function(options, seedLink) {
   seed = seedLink;
 };
 
-exports.up = function(db) {
-  insert('title',[
+exports.up = function(db, callback) {
+  db.insert('todos',[
+    'title',
     'description', 
     'due_date', 
     'created_date', 

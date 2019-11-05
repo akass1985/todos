@@ -14,7 +14,7 @@ exports.setup = function(options, seedLink) {
   seed = seedLink;
 };
 
-exports.up = function(db) {
+exports.up = function(db, callback) {
   db.addForeignKey('todos', 'users', 'todos_assigned_user_users_id_foreign',
   {
     'assigned_user': 'id'
@@ -26,7 +26,7 @@ exports.up = function(db) {
   return null;
 };
 
-exports.down = function(db) {
+exports.down = function(db, callback) {
   db.removeForeignKey('todos', 'todos_assigned_user_users_id_foreign', callback);
   return null;
 };

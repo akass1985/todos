@@ -24,13 +24,13 @@ exports.up = function(db, callback) {
     'salt', 
     'chief'], 
     [
-      'Алексей', 
-      'Борисович', 
-      'Кассь', 
-      'alexeykass',
-      '81e8cf1af2d776234d8afd433799ce8bca1e0297714213e51a55f4a3d2fcf1b68b620a321e5d2bcea455702b95a605789af4a9e34c10f183550172acc373f6fc', 
+      'Иван', 
+      'Иванович', 
+      'Иванов', 
+      'i.i.ivanov',
+      '6021860af20edc56d8100cccec6b0912667dd00eb108b891ec7316a10cd0acdb1d7ba2ac7531f622b36b1d8634b5668f4fe1298f9892a78a7b2f6cad47f58227', 
       '7871803669b11a45', 
-      0], callback)
+      1], callback)
   return null;
 };
 

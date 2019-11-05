@@ -1,10 +1,8 @@
 {
-    "dev": {
-      "host": "localhost",
-      "user": "root",
-      "password" : "root",
-      "database": "test",
+  "defaultEnv": "mysql",
+    "example": {
       "driver": "mysql",
+      "url": { "ENV": "MYSQL_URL" },
       "multipleStatements": true
     }
   }

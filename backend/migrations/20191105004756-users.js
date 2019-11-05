@@ -16,19 +16,19 @@ exports.setup = function(options, seedLink) {
 
 exports.up = function(db, callback) {
   db.createTable('users', {
-    id: { type: 'int', primaryKey: true },
-    firstname: 'string',
-    middlename: 'string',
-    lastname: 'string',
-    login: 'string',
-    password: 'text',
-    salt: 'text',
+    id: { type: 'int', primaryKey: true, autoIncrement: true },
+    firstname: { type: 'string' },
+    middlename: { type: 'string' },
+    lastname: { type: 'string' },
+    login: { type: 'string' },
+    password: { type: 'text' },
+    salt: { type: 'text' },
     chief: { type: 'int' }
   }, callback)
   return null;
 };
 
-exports.down = function(db), callback {
+exports.down = function(db, callback) {
   db.dropTable('users', callback);
   return null;
 };

@@ -14,9 +14,9 @@ exports.setup = function(options, seedLink) {
   seed = seedLink;
 };
 
-exports.up = function(db) {
+exports.up = function(db, callback) {
   db.createTable('todos', {
-    id: { type: 'int', primaryKey: true },
+    id: { type: 'int', primaryKey: true, autoIncrement: true },
     title: { type: 'string' },
     description: { type: 'text' },
     due_date: { type: 'date' },
@@ -30,7 +30,7 @@ exports.up = function(db) {
   return null;
 };
 
-exports.down = function(db) {
+exports.down = function(db, callback) {
   db.dropTable('todos', callback);
   return null;
 };

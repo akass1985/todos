@@ -15,22 +15,26 @@ exports.setup = function(options, seedLink) {
 };
 
 exports.up = function(db, callback) {
-  db.insert('users',[
-    'firstname', 
-    'middlename', 
-    'lastname', 
-    'login', 
-    'password', 
-    'salt', 
-    'chief'], 
+  db.insert('todos',[
+    'title',
+    'description', 
+    'due_date', 
+    'created_date', 
+    'modified_date', 
+    'priority', 
+    'status', 
+    'owner', 
+    'assigned_user'], 
     [
-      'Алексей', 
-      'Борисович', 
-      'Кассь', 
-      'alexeykass',
-      '81e8cf1af2d776234d8afd433799ce8bca1e0297714213e51a55f4a3d2fcf1b68b620a321e5d2bcea455702b95a605789af4a9e34c10f183550172acc373f6fc', 
-      '7871803669b11a45', 
-      0], callback)
+      'Подготовиться к застолью',
+      'Купить хлеба и макарон',
+      '2019-12-31',
+      '2019-11-15',
+      '2019-11-15',
+      'низкий',
+      'выполняется',
+      1,
+      2], callback)
   return null;
 };
 
