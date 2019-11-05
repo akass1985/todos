@@ -1,4 +1,4 @@
-export const socket = new WebSocket("ws://back:8888/");
+export const socket = new WebSocket("ws://localhost:8888/");
 
 export const apiFetchTodos = (message) => {
     if (socket.readyState === WebSocket.OPEN) {
