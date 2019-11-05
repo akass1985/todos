@@ -71,3 +71,14 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `yarn build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+# todos-frontend
+
+## Доступные команды
+
+### Для запуска frontend'а необхоидмо выполнить команду:
+
+    yarn start
+
+### Для запуска юнит-тестов необходимо выполнить команду:
+
+    yarn test-units

@@ -1,11 +1,7 @@
 # todos-backend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Доступные команды
 
-## Available Scripts
+### Для запуска backend'а необхоидмо выполнить команду:
 
-In the project directory, you can run:
-
-### `node index.js`
-
-Runs the app
+    yarn start
