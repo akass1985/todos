@@ -33,7 +33,7 @@ const Auth = () => {
             keyboard
             show={!auth.userId}>
             <Modal.Header>
-                <Modal.Title>Ты хто?</Modal.Title>
+                <Modal.Title>Вход в систему</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <Container>
