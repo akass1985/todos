@@ -7,7 +7,7 @@ const clients = [];
 
 const conn = mysql.createConnection({
     charset: "utf8_general_ci",
-    host: 'localhost',
+    host: 'db',
     user: 'root',
     password: 'root',
     database: 'example'
