@@ -14,7 +14,7 @@
 
 а затем
 
-    node index.js
+    yarn start
 
 
 ## Запуск frontend'а. Из каталога todos/frontend выполнить команду:
